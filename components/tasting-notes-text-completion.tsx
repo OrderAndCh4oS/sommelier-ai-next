@@ -25,7 +25,7 @@ const TastingNotesTextCompletion: FC = () => {
                 <>
                     <h3>Suggestions</h3>
                     <ol>
-                        {results.map(text => <li><span>{text}</span></li>)}
+                        {results.map((text, i) => <li key={i}><span>{text}</span></li>)}
                     </ol>
                 </>
             ) : null}

@@ -16,15 +16,20 @@ const HeaderBar = () => {
                 {user
                     ? (
                         <>
-                        <Link href='/tasting-notes'>
-                            <a className={styles.headerMenuLink}>Tasting Notes</a>
-                        </Link>
-                        <Link href='/recommendations'>
-                            <a className={styles.headerMenuLink}>Recommendations</a>
-                        </Link>
-                        <a href="/api/auth/logout" className={styles.headerMenuLink}>Logout</a>
+                            <Link href='/tasting-notes'>
+                                <a className={styles.headerMenuLink}>Tasting Notes</a>
+                            </Link>
+                            <Link href='/recommendations'>
+                                <a className={styles.headerMenuLink}>Recommendations</a>
+                            </Link>
+                            <Link href="/api/auth/logout">
+                                <a className={styles.headerMenuLink}>Logout</a>
+                            </Link>
                         </>
-                    ) : <a href="/api/auth/login" className={styles.headerMenuLink}>Login</a>}
+                    ) : <Link href="/api/auth/login">
+                        <a className={styles.headerMenuLink}>Login</a>
+                    </Link>
+                }
             </div>
         </header>
     );

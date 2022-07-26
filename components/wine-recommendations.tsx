@@ -48,7 +48,7 @@ const TastingNotesTextCompletion: FC = () => {
                 <>
                     <h3>Search Results</h3>
                     <div>
-                        {results.search.map(wine => <WineSuggestion wine={wine}/>)}
+                        {results.search.map((wine, i) => <WineSuggestion key={`s_${i}`} wine={wine}/>)}
                     </div>
                 </>
             ) : null}
@@ -56,7 +56,7 @@ const TastingNotesTextCompletion: FC = () => {
                 <>
                     <h3>Recommendations</h3>
                     <div>
-                        {results.recommendations.map(wine => <WineSuggestion wine={wine}/>)}
+                        {results.recommendations.map((wine, i) => <WineSuggestion key={`r_${i}`} wine={wine}/>)}
                     </div>
                 </>
             ) : null}
