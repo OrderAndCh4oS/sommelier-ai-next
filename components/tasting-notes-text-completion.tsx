@@ -10,7 +10,6 @@ const TastingNotesTextCompletion: FC = () => {
         const response = await tastingNotesTextCompletionRequest(prompt);
         setResults(response?.choices.map((choice: { text: string }) => {
             let completion = choice.text.trim();
-            console.log(completion);
             if (!/\p{P}$/u.test(completion)) {
                 completion += ' …'
             }
