@@ -11,12 +11,15 @@ interface IPageWrapperProps {
 const PageWrapper: FC<IPageWrapperProps> = ({children}) => {
     const {user, error, isLoading} = useUser();
 
+    // Todo: show toast notification if login fails.
+    // if (error) return <div>{error.message}</div>;
+
     return (
         <div className={styles.pageWrapper}>
             <HeaderBar />
             <main className={styles.mainContent}>
                 <div className={styles.mainContentSpacer}>
-                {children}
+                    {isLoading ? <p className={styles.loading}>Loading…</p>: children}
                 </div>
             </main>
             <Footer />

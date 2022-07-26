@@ -15,3 +15,8 @@
     box-sizing: border-box;
     margin: 0 40px;
 }
+
+.loading {
+    font-style: italic;
+    font-size: 24px;
+}

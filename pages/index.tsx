@@ -4,11 +4,6 @@ import PageWrapper from "../components/structure/page-wrapper/page-wrapper";
 import styles from '../styles/landing-page.module.css';
 
 const Home: NextPage = () => {
-    const {user, error, isLoading} = useUser();
-
-    if (isLoading) return <PageWrapper><div>Authenticating…</div></PageWrapper>
-    if (error) return <PageWrapper><div>{error.message}</div></PageWrapper>;
-
     return (
         <PageWrapper>
             <h1 className={styles.title}>Sommelier AI</h1>
