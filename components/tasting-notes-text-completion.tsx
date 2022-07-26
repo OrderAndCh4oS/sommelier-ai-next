@@ -21,7 +21,7 @@ const TastingNotesTextCompletion: FC = () => {
         <div>
             <h2>Tasting Notes</h2>
             <TextForm handleSubmit={handleSubmit} buttonText={'Generate'}/>
-            {results ? (
+            {results.length ? (
                 <>
                     <h3>Suggestions</h3>
                     <ol>
