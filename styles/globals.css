@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+:root {
+    --black: #171718;
+    --white: #ffffff;
+    --logo: var(--black);
+    --lighter-grey: #e8f1f1;
+    --light-grey: #cbd2d0;
+    --dark-grey: #333030;
+    --green: #09be3c;
+    --red: #ff0000;
+    --darker-grey: #232121;
+    --text: var(--black);
+    --border: var(--lighter-grey);
+    --button-background: var(--white);
+    --button-background-hover: var(--lighter-grey);
+    --button-background-active: var(--white);
+    --button-border: var(--black);
+    --button-border-hover: var(--black);
+    --button-border-active: var(--red);
+    --background: var(--white);
+}
+
+.darkMode {
+    --black: #ffffff;
+    --white: #171718;
+    --lighter-grey: #333030;
+    --logo: var(--lighter-grey);
+    --text: var(--black);
+    --border: var(--dark-grey);
+    --button-background: var(--black);
+    --button-background-hover: var(--darker-grey);
+    --button-background-active: var(--white);
+    --button-border: var(--black);
+    --button-border-hover: var(--black);
+    --button-border-active: var(--red);
+    --background: var(--white);
+}
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Ibarra Real Nova', 'Goudy Old Style', Garamond, 'Times New Roman', serif;
+    color: var(--text);
+    background: var(--background);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6, strong, b {
+    font-weight: 600;
+}
+
+input, input[type="text"], input[type="number"], input[type="email"], input[type="password"], textarea {
+    padding: 2px 4px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    margin-bottom: 0;
+}
+
+button {
+    font-family: 'Ibarra Real Nova', 'Goudy Old Style', Garamond, 'Times New Roman', serif;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: var(--button-background);
+    border: 1px solid var(--button-border);
+    padding: 4px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    color: var(--text);
+    transition: background-color 500ms ease-in-out, border 500ms ease-in-out;
+}
+
+button:hover {
+    background-color: var(--button-background-hover);
+    border-color: var(--button-border-hover);
+}
+
+button:active {
+    background-color: var(--button-background-active);
+    border-color: var(--button-border-active);
+}
+
+a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+a:hover, a:visited, a:active {
+    color: var(--text);
+    text-decoration: none;
+    padding-bottom: 1px;
+    border-bottom: 1px solid var(--red);
+}
+
+ol {
+    font-style: italic;
+    margin-left: 0;
+    padding-left: 16px;
+    font-weight: 600;
+}
+
+ol li {
+    margin-bottom: 16px;
+}
+
+li span {
+    font-style: normal;
+    font-weight: 400;
+}
+
+hr {
+    margin-top: 50px;
+    overflow: visible; /* For IE */
+    height: 30px;
+    border-style: solid;
+    border-color: var(--red);
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
+}
+
+hr:before {
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-color: var(--red);
+    border-width: 0 0 1px 0;
+    border-radius: 20px;
+}
+
+::selection {
+    color: var(--white);
+    background: #FF4100;
+}
+
+::-moz-selection {
+    color: var(--white);
+    background: #FF4100; /* firefox code */
+}

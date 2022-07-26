@@ -1,0 +1,17 @@
+.pageWrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.mainContent {
+    box-sizing: border-box;
+    margin: 40px auto;
+    width: 100%;
+    max-width: 800px;
+}
+
+.mainContentSpacer {
+    box-sizing: border-box;
+    margin: 0 40px;
+}

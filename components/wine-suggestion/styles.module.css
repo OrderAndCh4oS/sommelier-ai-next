@@ -1,0 +1,12 @@
+.title {
+    font-size: 21px;
+    font-style: italic;
+    margin: 0;
+}
+
+.subHeading {
+    font-weight: 600;
+    margin: 0;
+    font-size: 16px;
+    line-height: 21px;
+}

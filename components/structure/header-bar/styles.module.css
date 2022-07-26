@@ -1,0 +1,21 @@
+.headerBar {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 40px;
+}
+
+.siteTitle {
+    font-weight: 600;
+    font-size: 18px;
+    margin: 0;
+}
+
+.headerMenu {
+    margin-left: auto;
+    display: flex;
+}
+
+.headerMenuLink {
+    margin-left: 16px;
+}
