@@ -9,11 +9,15 @@ const TastingNotesTextCompletion: FC = () => {
     const handleSubmit = async ({text: prompt}: { text: string }, _: FormikHelpers<any>) => {
         const response = await tastingNotesTextCompletionRequest(prompt);
         setResults(response?.choices.map((choice: { text: string }) => {
-            let completion = choice.text;
-            if (!['.', '!', '?'].includes(completion[completion.length - 1])) {
+            let completion = choice.text.trim();
+            console.log(completion);
+            if (!/\p{P}$/u.test(completion)) {
                 completion += ' …'
             }
-            return `${prompt} ${completion}`;
+            if(/^[\p{L}\p{N}\p{Ps}\p{Pi}\p{Pd}]/u.test(completion)) {
+                completion = ' ' + completion
+            }
+            return `${prompt}${completion}`;
         }))
     }
 
