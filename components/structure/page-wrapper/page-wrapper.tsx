@@ -19,7 +19,7 @@ const PageWrapper: FC<IPageWrapperProps> = ({children}) => {
             <HeaderBar />
             <main className={styles.mainContent}>
                 <div className={styles.mainContentSpacer}>
-                    {isLoading ? <p className={styles.loading}>Loading…</p>: children}
+                    {isLoading ? <p className={styles.loading}>Initialising…</p>: children}
                 </div>
             </main>
             <Footer />
