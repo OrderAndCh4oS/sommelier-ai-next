@@ -6,6 +6,7 @@ export default withApiAuthRequired(
     async function handler(req: NextApiRequest, res: NextApiResponse) {
         try {
             const {accessToken} = await getAccessToken(req, res);
+            // console.log(accessToken);
             const prompt = req.body.prompt
             const response = await axios.post('https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/tasting-notes', {prompt}, {
                 headers: {
@@ -15,6 +16,7 @@ export default withApiAuthRequired(
 
             res.status(200).json(response.data);
         } catch (e) {
+            console.log(e);
             res.status(500).end();
         }
     }
