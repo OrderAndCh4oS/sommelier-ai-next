@@ -6,8 +6,8 @@ import styles from '../styles/landing-page.module.css';
 const Home: NextPage = () => {
     const {user, error, isLoading} = useUser();
 
-    if (isLoading) return <div>Authenticating…</div>
-    if (error) return <div>{error.message}</div>;
+    if (isLoading) return <PageWrapper><div>Authenticating…</div></PageWrapper>
+    if (error) return <PageWrapper><div>{error.message}</div></PageWrapper>;
 
     return (
         <PageWrapper>
