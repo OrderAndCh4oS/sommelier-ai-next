@@ -43,7 +43,11 @@ const TastingNotesTextCompletion: FC = () => {
     return (
         <div>
             <h2>Wine Recommendations</h2>
-            <TextForm handleSubmit={handleSubmit} buttonText={'Discover'}/>
+            <TextForm
+                handleSubmit={handleSubmit}
+                buttonText={'Discover'}
+                placeholder='Fruity, reminiscent of blackberries and cherries…'
+            />
             {results.search.length ? (
                 <>
                     <h3>Search Results</h3>

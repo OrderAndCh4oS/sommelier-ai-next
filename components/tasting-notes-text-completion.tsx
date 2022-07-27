@@ -23,7 +23,11 @@ const TastingNotesTextCompletion: FC = () => {
     return (
         <div>
             <h2>Tasting Notes</h2>
-            <TextForm handleSubmit={handleSubmit} buttonText={'Generate'}/>
+            <TextForm
+                handleSubmit={handleSubmit}
+                buttonText={'Generate'}
+                placeholder='Notes of blackberry, currant, and plum. There is a hint of oak on the finish…'
+            />
             {results.length ? (
                 <>
                     <h3>Suggestions</h3>

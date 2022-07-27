@@ -61,6 +61,11 @@ input, input[type="text"], input[type="number"], input[type="email"], input[type
     margin-bottom: 0;
 }
 
+textarea::placeholder {
+    font-style: italic;
+    color: var(--light-grey);
+}
+
 button {
     font-family: 'Ibarra Real Nova', 'Goudy Old Style', Garamond, 'Times New Roman', serif;
     font-size: 18px;

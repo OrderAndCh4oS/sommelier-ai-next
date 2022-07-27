@@ -11,11 +11,12 @@ const schema = yup.object({
 
 interface IPostPromptFormProps<T> {
     handleSubmit: (values: T, formikHelpers: FormikHelpers<T>) => void | Promise<any>
-    buttonText: string
+    buttonText: string,
+    placeholder: string
 }
 
 
-const TextForm: FC<IPostPromptFormProps<{ text: string }>> = ({handleSubmit, buttonText}) => {
+const TextForm: FC<IPostPromptFormProps<{ text: string }>> = ({handleSubmit, buttonText, placeholder = ''}) => {
     return (
         <Formik
             initialValues={{text: ''}}
@@ -24,7 +25,12 @@ const TextForm: FC<IPostPromptFormProps<{ text: string }>> = ({handleSubmit, but
         >
             <Form>
                 <div className={styles.formField}>
-                    <Field name="text" as="textarea" className={styles.textField}/>
+                    <Field
+                        name="text"
+                        as="textarea"
+                        placeholder={placeholder}
+                        className={styles.textField}
+                    />
                     <div className={styles.errorMessage}>
                         <ErrorMessage name="text"/>
                     </div>
