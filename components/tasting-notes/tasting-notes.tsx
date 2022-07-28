@@ -72,7 +72,7 @@ const TastingNotes: FC = () => {
                 handleSubmit={handleSubmitReimagine}
                 isProcessing={isProcessing}
                 buttonText={'Reimagine'}
-                placeholder='Notes of blackberry, currant, and plum. There is a hint of oak on the finish…'
+                placeholder='Scintillating citrus abounds in this fragrant ersatz dry riesling. Fantasy fruit trumps reality in this wacky creature that turns green apples into gold, peaches and apricots into fairy tales.'
             /> : null}
             {results.length ? (
                 <>
