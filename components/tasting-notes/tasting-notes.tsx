@@ -3,12 +3,15 @@ import TextForm from "../text-form/text-form";
 import {FormikHelpers} from "formik";
 import tastingNotesTextCompletionRequest from "../../requests/tasting-notes-text-completion.request";
 import TastingNoteItem from "../tasting-note-item/tasting-note-item";
+import tastingNotesReimagineRequest from "../../requests/tasting-notes-reimagine.request";
+import styles from './styles.module.css';
 
 const TastingNotes: FC = () => {
     const [results, setResults] = useState<string[]>([]);
     const [isProcessing, setIsProcessing] = useState(false);
+    const [currentTab, setCurrentTab] = useState<'generate' | 'reimagine'>('generate');
 
-    const handleSubmit = async ({text: prompt}: { text: string }, _: FormikHelpers<any>) => {
+    const handleSubmitCompletion = async ({text: prompt}: { text: string }, _: FormikHelpers<any>) => {
         setIsProcessing(true);
         setResults([]);
         try {
@@ -28,18 +31,49 @@ const TastingNotes: FC = () => {
             console.log(e);
         }
         setIsProcessing(false);
-
     }
+
+    const handleSubmitReimagine = async ({text: tastingNote}: { text: string }, _: FormikHelpers<any>) => {
+        setIsProcessing(true);
+        setResults([]);
+        try {
+            const response = await tastingNotesReimagineRequest(tastingNote);
+            console.log('r', response);
+            setResults(response?.choices.map((choice: { text: string }) => choice.text) || [])
+        } catch (e) {
+            // Todo: handle error
+            console.log(e)
+        }
+        setIsProcessing(false);
+    };
+
+    const handleTabChange = (tab: 'generate' | 'reimagine') => () => setCurrentTab(tab);
 
     return (
         <div>
             <h2>Tasting Notes</h2>
-            <TextForm
-                handleSubmit={handleSubmit}
+            <div className={styles.tabBar}>
+                <button
+                    className={[styles.tabButton, currentTab === 'generate' ? styles.active : ''].join(' ')}
+                    onClick={handleTabChange('generate')}
+                >Generate</button>
+                <button
+                    className={[styles.tabButton, currentTab === 'reimagine' ? styles.active : ''].join(' ')}
+                    onClick={handleTabChange('reimagine')}
+                >Reimagine</button>
+            </div>
+            {currentTab === 'generate' ? <TextForm
+                handleSubmit={handleSubmitCompletion}
                 isProcessing={isProcessing}
                 buttonText={'Generate'}
                 placeholder='Notes of blackberry, currant, and plum. There is a hint of oak on the finish…'
-            />
+            /> : null}
+            {currentTab === 'reimagine' ? <TextForm
+                handleSubmit={handleSubmitReimagine}
+                isProcessing={isProcessing}
+                buttonText={'Reimagine'}
+                placeholder='Notes of blackberry, currant, and plum. There is a hint of oak on the finish…'
+            /> : null}
             {results.length ? (
                 <>
                     <h3>Suggestions</h3>

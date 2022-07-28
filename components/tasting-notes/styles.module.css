@@ -1,0 +1,22 @@
+.tabBar {
+    display: flex;
+    padding: 0;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--light-grey);
+}
+
+.tabButton {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 1px solid var(--light-grey);
+    margin-right: 4px;
+}
+
+.tabButton, .tabButton:hover, .tabButton:active {
+    border-bottom: none;
+}
+
+.tabButton.active {
+    border: 1px solid var(--black);
+    border-bottom: none;
+}

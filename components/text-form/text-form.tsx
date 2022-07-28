@@ -6,7 +6,7 @@ import SpinnerIcon from "../icons/spinner.icon";
 
 const schema = yup.object({
     text: yup.string()
-        .max(256, 'Must be 256 characters or less')
+        .max(512, 'Must be 512 characters or less')
         .required('Required')
 })
 
@@ -16,7 +16,6 @@ interface IPostPromptFormProps<T> {
     buttonText: string,
     placeholder: string
 }
-
 
 const TextForm: FC<IPostPromptFormProps<{ text: string }>> = ({handleSubmit, isProcessing, buttonText, placeholder = ''}) => {
     return (
