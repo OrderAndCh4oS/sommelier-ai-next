@@ -2,6 +2,7 @@ import {FC} from "react";
 import {ErrorMessage, Field, Form, Formik, FormikHelpers} from 'formik';
 import * as yup from 'yup';
 import styles from './styles.module.css'
+import SpinnerIcon from "../icons/spinner.icon";
 
 const schema = yup.object({
     text: yup.string()
@@ -11,12 +12,13 @@ const schema = yup.object({
 
 interface IPostPromptFormProps<T> {
     handleSubmit: (values: T, formikHelpers: FormikHelpers<T>) => void | Promise<any>
+    isProcessing: boolean
     buttonText: string,
     placeholder: string
 }
 
 
-const TextForm: FC<IPostPromptFormProps<{ text: string }>> = ({handleSubmit, buttonText, placeholder = ''}) => {
+const TextForm: FC<IPostPromptFormProps<{ text: string }>> = ({handleSubmit, isProcessing, buttonText, placeholder = ''}) => {
     return (
         <Formik
             initialValues={{text: ''}}
@@ -35,7 +37,7 @@ const TextForm: FC<IPostPromptFormProps<{ text: string }>> = ({handleSubmit, but
                         <ErrorMessage name="text"/>
                     </div>
                 </div>
-                <button type="submit">{buttonText}</button>
+                <button type="submit">{buttonText} {isProcessing ? <SpinnerIcon/> : null}</button>
             </Form>
         </Formik>
     );

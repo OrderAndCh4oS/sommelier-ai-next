@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {IWine} from "../wine-recommendations";
+import {IWine} from "../recommendations/recommendations";
 import styles from './styles.module.css'
 
 const WineSuggestion: FC<{wine: IWine}> = ({wine}) => {

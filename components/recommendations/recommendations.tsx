@@ -1,8 +1,8 @@
 import {FC, useState} from "react";
-import TextForm from "./text-form/text-form";
+import TextForm from "../text-form/text-form";
 import {FormikHelpers} from "formik";
-import wineRecommendationRequest from "../requests/wine-recommendation.request";
-import WineSuggestion from "./wine-suggestion/wine-suggestion";
+import wineRecommendationRequest from "../../requests/wine-recommendation.request";
+import WineSuggestion from "../wine-suggestion/wine-suggestion";
 
 interface IResults {
     search: IWine[],
@@ -22,22 +22,30 @@ const regex = /^NAME: (?<name>.*?), COUNTRY: (?<country>.*?), REGION: (?<region>
 
 const TastingNotesTextCompletion: FC = () => {
     const [results, setResults] = useState<IResults>({search: [], recommendations: []});
+    const [isProcessing, setIsProcessing] = useState(false);
 
     const handleSubmit = async ({text: query}: { text: string }, _: FormikHelpers<any>) => {
-        const response = await wineRecommendationRequest(query);
-        const search: IWine[] = [];
-        for (const searchResult of response.search) {
-            const result = regex.exec(searchResult);
-            if (!result?.groups) continue;
-            search.push(result.groups as unknown as IWine);
+        setIsProcessing(true);
+        setResults({search: [], recommendations: []});
+        try {
+            const response = await wineRecommendationRequest(query);
+            const search: IWine[] = [];
+            for (const searchResult of response.search) {
+                const result = regex.exec(searchResult);
+                if (!result?.groups) continue;
+                search.push(result.groups as unknown as IWine);
+            }
+            const recommendations: IWine[] = [];
+            for (const recommendationResult of response.recommend) {
+                const result = regex.exec(recommendationResult);
+                if (!result?.groups) continue;
+                recommendations.push(result.groups as unknown as IWine);
+            }
+            setResults({search, recommendations});
+        } catch (e) {
+            // Todo: display error
         }
-        const recommendations: IWine[] = [];
-        for (const recommendationResult of response.recommend) {
-            const result = regex.exec(recommendationResult);
-            if (!result?.groups) continue;
-            recommendations.push(result.groups as unknown as IWine);
-        }
-        setResults({search, recommendations})
+        setIsProcessing(false);
     }
 
     return (
@@ -45,6 +53,7 @@ const TastingNotesTextCompletion: FC = () => {
             <h2>Wine Recommendations</h2>
             <TextForm
                 handleSubmit={handleSubmit}
+                isProcessing={isProcessing}
                 buttonText={'Discover'}
                 placeholder='Fruity, reminiscent of blackberries and cherries…'
             />
