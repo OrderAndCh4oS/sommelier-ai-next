@@ -2,6 +2,7 @@ import {FC, useState} from "react";
 import TextForm from "../text-form/text-form";
 import {FormikHelpers} from "formik";
 import tastingNotesTextCompletionRequest from "../../requests/tasting-notes-text-completion.request";
+import TastingNoteItem from "../tasting-note-item/tasting-note-item";
 
 const TastingNotes: FC = () => {
     const [results, setResults] = useState<string[]>([]);
@@ -17,13 +18,14 @@ const TastingNotes: FC = () => {
                 if (!/\p{P}$/u.test(completion)) {
                     completion += ' …'
                 }
-                if(/^[\p{L}\p{N}\p{Ps}\p{Pi}\p{Pd}]/u.test(completion)) {
+                if (/^[\p{L}\p{N}\p{Ps}\p{Pi}\p{Pd}]/u.test(completion)) {
                     completion = ' ' + completion
                 }
                 return `${prompt}${completion}`;
-            }))
+            }) || [])
         } catch (e) {
             // Todo: display error
+            console.log(e);
         }
         setIsProcessing(false);
 
@@ -42,7 +44,13 @@ const TastingNotes: FC = () => {
                 <>
                     <h3>Suggestions</h3>
                     <ol>
-                        {results.map((text, i) => <li key={i}><span>{text}</span></li>)}
+                        {results.map((tastingNote, i) =>
+                            <TastingNoteItem
+                                key={`tn_${i}`}
+                                tastingNote={tastingNote}
+                                index={i}
+                                depth={1}
+                            />)}
                     </ol>
                 </>
             ) : null}

@@ -44,6 +44,7 @@ const TastingNotesTextCompletion: FC = () => {
             setResults({search, recommendations});
         } catch (e) {
             // Todo: display error
+            console.log(e);
         }
         setIsProcessing(false);
     }

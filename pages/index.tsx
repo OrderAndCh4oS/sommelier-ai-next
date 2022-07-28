@@ -1,5 +1,4 @@
 import type {NextPage} from 'next'
-import {useUser} from "@auth0/nextjs-auth0";
 import PageWrapper from "../components/structure/page-wrapper/page-wrapper";
 import styles from '../styles/landing-page.module.css';
 

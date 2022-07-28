@@ -1,8 +1,7 @@
 import type {NextPage} from 'next'
-import {useUser, withPageAuthRequired} from "@auth0/nextjs-auth0";
+import {withPageAuthRequired} from "@auth0/nextjs-auth0";
 import TastingNotes from "../components/tasting-notes/tasting-notes";
 import PageWrapper from "../components/structure/page-wrapper/page-wrapper";
-
 
 const Home: NextPage = () => {
     return (

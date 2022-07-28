@@ -104,15 +104,36 @@ a:hover, a:visited, a:active {
 ol {
     font-style: italic;
     margin-left: 0;
-    padding-left: 16px;
+    padding-left: 24px;
     font-weight: 600;
+}
+
+ol ol {
+    padding-left: 32px;
+}
+
+ol ol ol {
+    padding-left: 40px;
 }
 
 ol li {
     margin-bottom: 16px;
 }
 
-li span {
+ol {
+    position: relative;
+    list-style-type: none;
+    counter-reset: css-counters 0;
+}
+
+ol li:before {
+    position: absolute;
+    left: 0;
+    counter-increment: css-counters;
+    content: counters(css-counters, ".") " ";
+}
+
+li p {
     font-style: normal;
     font-weight: 400;
 }

@@ -2,10 +2,14 @@
     100% { transform: rotate(360deg) }
 }
 
+.spinnerHolder {
+    display: inline-block;
+    width: 0.7em;
+    height: 0.7em;
+    padding: 0;
+    margin-left: 6px;
+}
+
 .spinner {
     animation: spinner 0.8s linear infinite;
-    margin-left: 6px;
-    width: 16px;
-    height: 18px;
-    display: inline-block;
 }

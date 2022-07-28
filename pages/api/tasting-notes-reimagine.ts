@@ -8,8 +8,8 @@ export default withApiAuthRequired(
             const {accessToken} = await getAccessToken(req, res);
             // console.log(accessToken);
             // Todo: return 400 if missing param
-            const query = req.body.query
-            const response = await axios.post('https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/recommendations', {query}, {
+            const tastingNotes = req.body.tastingNotes
+            const response = await axios.post('https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/reimagine', {tastingNotes}, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
