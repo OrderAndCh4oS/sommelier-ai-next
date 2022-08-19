@@ -1,25 +1,25 @@
 import type {NextPage} from 'next'
-import createWineRequest from "../requests/wine/create-wine.request";
-import updateWineRequest from "../requests/wine/update-wine.request";
-import getWineRequest from "../requests/wine/get-wine.request";
-import getWineListByUserRequest from "../requests/wine/get-wine-list-by-user.request";
+import createWineRequest from '../requests/wine/create-wine.request';
+import updateWineRequest from '../requests/wine/update-wine.request';
+import getWineRequest from '../requests/wine/get-wine.request';
+import getWineListByUserRequest from '../requests/wine/get-wine-list-by-user.request';
 
 const ApiTest: NextPage = () => {
     const userId = 'xxxxx';
     const sk = 'a-red-wine+PGpkYPiSlLPULbp5RoSiP';
 
     const redWine = {
-        country: "France",
-        detailPrompt: "A fine wine with a bright future, drink after 2024",
-        flavourProfile: ["Ash", "Cherry", "Oak"],
-        name: "A Red Wine",
-        region: "Bordeaux",
+        country: 'France',
+        detailPrompt: 'A fine wine with a bright future, drink after 2024',
+        flavourProfile: ['Ash', 'Cherry', 'Oak'],
+        name: 'A Red Wine',
+        region: 'Bordeaux',
         score: 91,
-        starterText: "Wonderfully rounded red with huge amount of promise",
-        style: "red",
-        tastingNote: "Wonderfully rounded red with huge amount of promise etc. etc. etc.",
+        starterText: 'Wonderfully rounded red with huge amount of promise',
+        style: 'red',
+        tastingNote: 'Wonderfully rounded red with huge amount of promise etc. etc. etc.',
         userId,
-        vineyard: "Chateaux Blah",
+        vineyard: 'Chateaux Blah',
         vintage: 2016
     };
     const createWine = async () => {

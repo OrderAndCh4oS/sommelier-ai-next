@@ -1,4 +1,4 @@
-export default interface IWineList {
+export default interface IWine {
     userId: string,
     sk: string,
     name: string,
@@ -16,3 +16,6 @@ export default interface IWineList {
     createdAt: string,
     updatedAt: string
 }
+
+export type ICreateWine = Omit<IWine, 'sk' | 'createdAt' | 'updatedAt'>;
+export type IUpdateWine = Omit<IWine, 'createdAt' | 'updatedAt'>;

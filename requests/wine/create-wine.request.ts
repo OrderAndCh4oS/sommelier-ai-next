@@ -1,7 +1,7 @@
-import axios from "axios";
-import IWine from "../../interface/wine-list.interface";
+import axios from 'axios';
+import {ICreateWine} from '../../interface/wine-list.interface';
 
-const createWineRequest = async (wine: Omit<IWine, 'sk' | 'createdAt' | 'updatedAt'> ) => {
+const createWineRequest = async (wine: ICreateWine) => {
     // Todo: handle error responses
     const response = await axios.post('/api/wine/create', {wine});
 

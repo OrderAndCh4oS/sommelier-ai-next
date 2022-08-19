@@ -1,6 +1,6 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
 import {getAccessToken, withApiAuthRequired} from '@auth0/nextjs-auth0';
-import axios from "axios";
+import axios from 'axios';
 
 export default withApiAuthRequired(
     async function handler(req: NextApiRequest, res: NextApiResponse) {

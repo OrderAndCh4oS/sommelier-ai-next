@@ -1,6 +1,6 @@
-import {FC, useState} from "react";
-import tastingNotesReimagineRequest from "../../requests/tasting-notes-reimagine.request";
-import SpinnerIcon from "../icons/spinner.icon";
+import {FC, useState} from 'react';
+import tastingNotesReimagineRequest from '../../requests/tasting-notes-reimagine.request';
+import SpinnerIcon from '../icons/spinner.icon';
 import styles from './style.module.css';
 
 interface ITastingNoteItemProps {

@@ -1,9 +1,9 @@
-import {FC, useState} from "react";
-import TextForm from "../text-form/text-form";
-import {FormikHelpers} from "formik";
-import tastingNotesTextCompletionRequest from "../../requests/tasting-notes-text-completion.request";
-import TastingNoteItem from "../tasting-note-item/tasting-note-item";
-import tastingNotesReimagineRequest from "../../requests/tasting-notes-reimagine.request";
+import {FC, useState} from 'react';
+import TextForm from '../text-form/text-form';
+import {FormikHelpers} from 'formik';
+import tastingNotesTextCompletionRequest from '../../requests/tasting-notes-text-completion.request';
+import TastingNoteItem from '../tasting-note-item/tasting-note-item';
+import tastingNotesReimagineRequest from '../../requests/tasting-notes-reimagine.request';
 import styles from './styles.module.css';
 
 const TastingNotes: FC = () => {
@@ -56,23 +56,25 @@ const TastingNotes: FC = () => {
                 <button
                     className={[styles.tabButton, currentTab === 'generate' ? styles.active : ''].join(' ')}
                     onClick={handleTabChange('generate')}
-                >Generate</button>
+                >Generate
+                </button>
                 <button
                     className={[styles.tabButton, currentTab === 'reimagine' ? styles.active : ''].join(' ')}
                     onClick={handleTabChange('reimagine')}
-                >Reimagine</button>
+                >Reimagine
+                </button>
             </div>
             {currentTab === 'generate' ? <TextForm
                 handleSubmit={handleSubmitCompletion}
                 isProcessing={isProcessing}
                 buttonText={'Generate'}
-                placeholder='Notes of blackberry, currant, and plum. There is a hint of oak on the finish…'
+                placeholder="Notes of blackberry, currant, and plum. There is a hint of oak on the finish…"
             /> : null}
             {currentTab === 'reimagine' ? <TextForm
                 handleSubmit={handleSubmitReimagine}
                 isProcessing={isProcessing}
                 buttonText={'Reimagine'}
-                placeholder='Scintillating citrus abounds in this fragrant ersatz dry riesling. Fantasy fruit trumps reality in this wacky creature that turns green apples into gold, peaches and apricots into fairy tales.'
+                placeholder="Scintillating citrus abounds in this fragrant ersatz dry riesling. Fantasy fruit trumps reality in this wacky creature that turns green apples into gold, peaches and apricots into fairy tales."
             /> : null}
             {results.length ? (
                 <>

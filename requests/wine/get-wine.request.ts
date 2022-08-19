@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 const getWineRequest = async (userId: string, sk: string) => {
     // Todo: handle error responses

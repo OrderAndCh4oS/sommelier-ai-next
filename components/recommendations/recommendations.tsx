@@ -1,15 +1,15 @@
-import {FC, useState} from "react";
-import TextForm from "../text-form/text-form";
-import {FormikHelpers} from "formik";
-import wineRecommendationRequest from "../../requests/wine-recommendation.request";
-import WineSuggestion from "../wine-suggestion/wine-suggestion";
+import {FC, useState} from 'react';
+import TextForm from '../text-form/text-form';
+import {FormikHelpers} from 'formik';
+import wineRecommendationRequest from '../../requests/wine-recommendation.request';
+import WineSuggestion from '../wine-suggestion/wine-suggestion';
 
 interface IResults {
-    search: IWine[],
-    recommendations: IWine[]
+    search: IWineShort[],
+    recommendations: IWineShort[]
 }
 
-export interface IWine {
+export interface IWineShort {
     name: string,
     country: string,
     region: string,
@@ -29,17 +29,17 @@ const TastingNotesTextCompletion: FC = () => {
         setResults({search: [], recommendations: []});
         try {
             const response = await wineRecommendationRequest(query);
-            const search: IWine[] = [];
+            const search: IWineShort[] = [];
             for (const searchResult of response.search) {
                 const result = regex.exec(searchResult);
                 if (!result?.groups) continue;
-                search.push(result.groups as unknown as IWine);
+                search.push(result.groups as unknown as IWineShort);
             }
-            const recommendations: IWine[] = [];
+            const recommendations: IWineShort[] = [];
             for (const recommendationResult of response.recommend) {
                 const result = regex.exec(recommendationResult);
                 if (!result?.groups) continue;
-                recommendations.push(result.groups as unknown as IWine);
+                recommendations.push(result.groups as unknown as IWineShort);
             }
             setResults({search, recommendations});
         } catch (e) {
@@ -56,7 +56,7 @@ const TastingNotesTextCompletion: FC = () => {
                 handleSubmit={handleSubmit}
                 isProcessing={isProcessing}
                 buttonText={'Discover'}
-                placeholder='Fruity, reminiscent of blackberries and cherries…'
+                placeholder="Fruity, reminiscent of blackberries and cherries…"
             />
             {results.search.length ? (
                 <>

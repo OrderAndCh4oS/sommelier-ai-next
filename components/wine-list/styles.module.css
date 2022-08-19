@@ -1,0 +1,8 @@
+.title {
+    /*font-style: italic;*/
+    color: var(--red);
+}
+
+.intro {
+    font-size: 24px;
+}

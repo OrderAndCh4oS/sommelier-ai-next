@@ -54,7 +54,7 @@ h1, h2, h3, h4, h5, h6, strong, b {
     font-weight: 600;
 }
 
-input, input[type="text"], input[type="number"], input[type="email"], input[type="password"], textarea {
+input, textarea {
     padding: 2px 4px;
     border: 1px solid var(--border);
     border-radius: 2px;

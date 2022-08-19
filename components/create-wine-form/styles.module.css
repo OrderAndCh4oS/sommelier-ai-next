@@ -1,0 +1,17 @@
+.formField {
+    position: relative;
+}
+
+.textField {
+    font-family: 'Ibarra Real Nova', 'Goudy Old Style', Garamond, 'Times New Roman', serif;
+    font-size: 18px;
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.errorMessage {
+    position: absolute;
+    bottom: -20px;
+    right: 0;
+}
