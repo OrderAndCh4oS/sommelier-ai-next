@@ -7,13 +7,12 @@ export default withApiAuthRequired(
         try {
             const {accessToken} = await getAccessToken(req, res);
             console.log(accessToken);
-            // Todo: return 400 if missing param
-            const prompt = req.body.prompt
-            const response = await axios.post('https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/tasting-notes', {prompt}, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            });
+            const userId = req.query.userId!;
+            console.log(req.query);
+            const response = await axios.get(
+                `https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/wine-list/${userId}`,
+                {headers: {Authorization: `Bearer ${accessToken}`}}
+            );
 
             res.status(200).json(response.data);
         } catch (e) {

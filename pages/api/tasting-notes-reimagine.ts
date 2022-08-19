@@ -6,7 +6,7 @@ export default withApiAuthRequired(
     async function handler(req: NextApiRequest, res: NextApiResponse) {
         try {
             const {accessToken} = await getAccessToken(req, res);
-            // console.log(accessToken);
+            console.log(accessToken);
             // Todo: return 400 if missing param
             const tastingNotes = req.body.tastingNotes
             const response = await axios.post('https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/reimagine', {tastingNotes}, {
