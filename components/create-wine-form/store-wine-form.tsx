@@ -28,7 +28,7 @@ let initialValues = {
     region: '',
     vineyard: '',
     vintage: new Date().getFullYear(),
-    score: 100,
+    score: 0,
     flavourProfile: '',
     detailPrompt: '',
     starterText: '',
@@ -39,14 +39,12 @@ type IWineFormValues = Omit<ICreateWine, 'userId' | 'tastingNote' | 'flavourProf
 const removeNonStoreWineFormValues = (storedWine: IWine) => {
     const tempStoredWine = {...storedWine};
     const initialValuesKeys = Object.keys(initialValues);
-    console.log('tempStoredWine', tempStoredWine);
 
     for (const key of Object.keys(tempStoredWine)) {
         if (!initialValuesKeys.includes(key))
             delete (tempStoredWine)[key as keyof IWineFormValues];
     }
 
-    console.log('tempStoredWine', tempStoredWine);
     initialValues = {
         ...tempStoredWine,
         flavourProfile: tempStoredWine.flavourProfile.join(', ')
