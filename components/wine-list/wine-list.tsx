@@ -9,16 +9,16 @@ const WineList = () => {
     const {user} = useUser();
 
     useEffect(() => {
+        // Todo: use swr to fetch wine list
         (async () => {
             const newWineList = await getWineListByUserRequest(user!.sub as string);
-            console.log(newWineList)
             setWineList(newWineList)
         })()
     }, []);
 
     return (
         <>
-            <Link href="/create-wine">
+            <Link href="/wine/create">
                 <a>Create Wine</a>
             </Link>
             <h2>Wine List</h2>
@@ -28,6 +28,14 @@ const WineList = () => {
                     <p>{wine.country}, {wine.region}, {wine.vineyard}, {wine.vintage}</p>
                     <p>{wine.score}</p>
                     <p>{wine.tastingNote}</p>
+                    <Link
+                        href={{
+                            pathname: '/wine/edit/[sk]',
+                            query: { sk: wine.sk },
+                        }}
+                    >
+                        <a>Edit</a>
+                    </Link>
                 </div>
             ))}
         </>

@@ -3,9 +3,10 @@ import {ErrorMessage, Field, Form, Formik} from 'formik';
 import * as yup from 'yup';
 import styles from './styles.module.css'
 import SpinnerIcon from '../icons/spinner.icon';
-import {ICreateWine} from '../../interface/wine-list.interface';
+import IWine, {ICreateWine, IUpdateWine} from '../../interface/wine-list.interface';
 import createWineRequest from '../../requests/wine/create-wine.request';
 import {useUser} from '@auth0/nextjs-auth0';
+import updateWineRequest from '../../requests/wine/update-wine.request';
 
 const schema = yup.object({
     name: yup.string().required('Required'),
@@ -15,12 +16,12 @@ const schema = yup.object({
     vineyard: yup.string().required('Required'),
     vintage: yup.number().required('Required'),
     score: yup.number().required('Required'),
-    flavourProfile: yup.string().required('Required'), // Todo: should be array, can just split on commas for now
+    flavourProfile: yup.string().required('Required'),
     detailPrompt: yup.string().required('Required'),
     starterText: yup.string().required('Required'),
 })
 
-const initialValues = {
+let initialValues = {
     name: '',
     style: '',
     country: '',
@@ -33,21 +34,51 @@ const initialValues = {
     starterText: '',
 }
 
-const CreateWineForm: FC = () => {
+type IWineFormValues = Omit<ICreateWine, 'userId' | 'tastingNote' | 'flavourProfile'> & { flavourProfile: string };
+
+const removeNonStoreWineFormValues = (storedWine: IWine) => {
+    const tempStoredWine = {...storedWine};
+    const initialValuesKeys = Object.keys(initialValues);
+    console.log('tempStoredWine', tempStoredWine);
+
+    for (const key of Object.keys(tempStoredWine)) {
+        if (!initialValuesKeys.includes(key))
+            delete (tempStoredWine)[key as keyof IWineFormValues];
+    }
+
+    console.log('tempStoredWine', tempStoredWine);
+    initialValues = {
+        ...tempStoredWine,
+        flavourProfile: tempStoredWine.flavourProfile.join(', ')
+    }
+};
+
+const StoreWineForm: FC<{ storedWine?: IWine | null }> = ({storedWine}) => {
     const [isProcessing, setIsProcessing] = useState(false);
     const {user} = useUser();
 
-    const handleSubmit = async (values: Omit<ICreateWine, 'userId' | 'tastingNote' | 'flavourProfile'> & { flavourProfile: string }) => {
+    if (storedWine) removeNonStoreWineFormValues(storedWine);
+
+    const handleSubmit = async (values: IWineFormValues) => {
         setIsProcessing(true);
         try {
-            await createWineRequest({
-                ...values,
-                vintage: values.vintage,
-                score: values.score,
-                flavourProfile: values.flavourProfile.split(', '),
-                userId: user!.sub as string,
-                tastingNote: 'xxxxx'
-            });
+            if (!storedWine) {
+                await createWineRequest({
+                    ...values,
+                    flavourProfile: values.flavourProfile.split(', '),
+                    userId: user!.sub as string,
+                    tastingNote: 'xxxxx'
+                });
+            } else {
+                const tempStoredWine: Partial<IWine> = {...storedWine};
+                delete tempStoredWine.createdAt;
+                delete tempStoredWine.updatedAt;
+                await updateWineRequest({
+                    ...(tempStoredWine as IUpdateWine),
+                    ...values,
+                    flavourProfile: values.flavourProfile.split(', '),
+                });
+            }
         } catch (e) {
             // Todo: handler error
             console.log(e)
@@ -60,6 +91,7 @@ const CreateWineForm: FC = () => {
             initialValues={initialValues}
             validationSchema={schema}
             onSubmit={handleSubmit}
+            enableReinitialize={true}
         >
             <Form>
                 <div className={styles.formField}>
@@ -176,11 +208,10 @@ const CreateWineForm: FC = () => {
                         <ErrorMessage name="starterText"/>
                     </div>
                 </div>
-                <button type="submit">Store {isProcessing ? <SpinnerIcon/> : null}</button>
+                <button type="submit">Store Wine {isProcessing ? <SpinnerIcon/> : null}</button>
             </Form>
         </Formik>
     );
-
 }
 
-export default CreateWineForm;
+export default StoreWineForm;
