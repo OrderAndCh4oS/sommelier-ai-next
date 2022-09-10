@@ -2,14 +2,16 @@ import {FC, useState} from 'react';
 import tastingNotesReimagineRequest from '../../requests/tasting-notes-reimagine.request';
 import SpinnerIcon from '../icons/spinner.icon';
 import styles from './style.module.css';
+import IWine from '../../interface/wine-list.interface';
 
 interface ITastingNoteItemProps {
     tastingNote: string
+    wine: IWine | null
     index: number,
-    depth: number
+    depth: number,
 }
 
-const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, index, depth}) => {
+const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, wine, index, depth}) => {
     const [subTastingNotes, setSubTastingNotes] = useState([]);
     const [isProcessing, setIsProcessing] = useState(false);
 
@@ -21,7 +23,7 @@ const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, index, depth})
         }
         setIsProcessing(true);
         try {
-            const response = await tastingNotesReimagineRequest(tastingNote);
+            const response = await tastingNotesReimagineRequest(tastingNote, wine);
             console.log('r', response);
             setSubTastingNotes(response?.choices.map((choice: { text: string }) => choice.text) || [])
         } catch (e) {
@@ -48,6 +50,7 @@ const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, index, depth})
                             key={`tn_${i}_${depth + 1}`}
                             tastingNote={stn}
                             index={i}
+                            wine={wine}
                             depth={depth + 1}
                         />)}
                     </ol>

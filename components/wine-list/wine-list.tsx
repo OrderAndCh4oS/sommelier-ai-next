@@ -54,7 +54,7 @@ const WineList: FC = () => {
     return (
         <>
             <Link href="/wine/create">
-                <a>Create Wine</a>
+                <button>Create Wine</button>
             </Link>
             <h2>Wine List</h2>
             {wineList.map(wine => (
@@ -63,6 +63,14 @@ const WineList: FC = () => {
                     <p>{wine.country}, {wine.region}, {wine.vineyard}, {wine.vintage}</p>
                     <p>{wine.score}</p>
                     <p>{wine.tastingNote}</p>
+                    <Link
+                        href={{
+                            pathname: '/wine/tasting-notes/[sk]',
+                            query: {sk: wine.sk},
+                        }}
+                    >
+                        <button className="button">Tasting Notes</button>
+                    </Link>
                     <Link
                         href={{
                             pathname: '/wine/edit/[sk]',

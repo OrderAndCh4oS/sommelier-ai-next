@@ -5,8 +5,13 @@ import tastingNotesTextCompletionRequest from '../../requests/tasting-notes-text
 import TastingNoteItem from '../tasting-note-item/tasting-note-item';
 import tastingNotesReimagineRequest from '../../requests/tasting-notes-reimagine.request';
 import styles from './styles.module.css';
+import IWine from '../../interface/wine-list.interface';
 
-const TastingNotes: FC = () => {
+interface ITastingNotesProps {
+    wine: IWine | null
+}
+
+const TastingNotes: FC<ITastingNotesProps> = ({wine}) => {
     const [results, setResults] = useState<string[]>([]);
     const [isProcessing, setIsProcessing] = useState(false);
     const [currentTab, setCurrentTab] = useState<'generate' | 'reimagine'>('generate');
@@ -15,7 +20,7 @@ const TastingNotes: FC = () => {
         setIsProcessing(true);
         setResults([]);
         try {
-            const response = await tastingNotesTextCompletionRequest(prompt);
+            const response = await tastingNotesTextCompletionRequest(prompt, wine);
             setResults(response?.choices.map((choice: { text: string }) => {
                 let completion = choice.text.trim();
                 if (!/\p{P}$/u.test(completion)) {
@@ -37,8 +42,7 @@ const TastingNotes: FC = () => {
         setIsProcessing(true);
         setResults([]);
         try {
-            const response = await tastingNotesReimagineRequest(tastingNote);
-            console.log('r', response);
+            const response = await tastingNotesReimagineRequest(tastingNote, wine);
             setResults(response?.choices.map((choice: { text: string }) => choice.text) || [])
         } catch (e) {
             // Todo: handle error
@@ -56,13 +60,11 @@ const TastingNotes: FC = () => {
                 <button
                     className={[styles.tabButton, currentTab === 'generate' ? styles.active : ''].join(' ')}
                     onClick={handleTabChange('generate')}
-                >Generate
-                </button>
+                >Generate</button>
                 <button
                     className={[styles.tabButton, currentTab === 'reimagine' ? styles.active : ''].join(' ')}
                     onClick={handleTabChange('reimagine')}
-                >Reimagine
-                </button>
+                >Reimagine</button>
             </div>
             {currentTab === 'generate' ? <TextForm
                 handleSubmit={handleSubmitCompletion}
@@ -84,6 +86,7 @@ const TastingNotes: FC = () => {
                             <TastingNoteItem
                                 key={`tn_${i}`}
                                 tastingNote={tastingNote}
+                                wine={wine}
                                 index={i}
                                 depth={1}
                             />)}

@@ -77,6 +77,7 @@ const StoreWineForm: FC<{ storedWine?: IWine | null }> = ({storedWine}) => {
                     flavourProfile: values.flavourProfile.split(', '),
                 });
             }
+            // Todo: Show success message, clear form, add to or refresh wine list
         } catch (e) {
             // Todo: handler error
             console.log(e)
