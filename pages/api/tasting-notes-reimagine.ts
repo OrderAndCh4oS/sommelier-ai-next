@@ -11,17 +11,15 @@ export default withApiAuthRequired(
             // Todo: return 400 if missing params
             const tastingNotes = req.body.tastingNotes
             const wine = req.body.wine as IWine;
-            const prompt = trimIndents`                
-                tasting notes: ${tastingNotes.trim()}
+            const input = tastingNotes.trim();
 
-                rewrite and embellish the tasting notes about a ${wine.vintage} vintage ${wine.style} wine from the ${wine.region} of ${wine.country}:`;
-
+            const instruction = `Rewrite and embellish wine tasting notes`
             const response = await axios.post(
-                'https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/completion',
-                {prompt},
+                'https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/edit',
+                {input, instruction},
                 {headers: {Authorization: `Bearer ${accessToken}`}
             });
-
+            console.log(response.data);
             res.status(200).json(response.data);
         } catch (e) {
             console.log(e);

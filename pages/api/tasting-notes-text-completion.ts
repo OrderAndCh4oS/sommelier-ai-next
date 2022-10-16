@@ -12,10 +12,9 @@ export default withApiAuthRequired(
             const tastingNotes = req.body.prompt;
             const wine = req.body.wine as IWine;
 
-            const prompt = trimIndents`
-                tasting notes: ${tastingNotes.trim()}
+            const prompt = trimIndents`Complete the following Tasting Notes describing a ${wine.vintage} vintage ${wine.style} wine from the ${wine.region} of ${wine.country} its flavour profile includes ${wine.flavourProfile.join(', ')}.
                 
-                complete the tasting notes describing a ${wine.vintage} vintage ${wine.style} wine from the ${wine.region} of ${wine.country} its flavours include ${wine.flavourProfile.join(', ')}:`;
+                Tasting Notes: ${tastingNotes.trim()}`;
 
             const response = await axios.post('https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/completion',
                 {prompt},

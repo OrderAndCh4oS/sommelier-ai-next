@@ -7,5 +7,5 @@ export function trimIndents(strings: TemplateStringsArray, ...values: (string | 
     }
     output += strings[values.length].replace(regex, "$1");
 
-    return output;
+    return output.trim();
 }
