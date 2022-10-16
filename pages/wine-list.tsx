@@ -1,10 +1,10 @@
 import type {NextPage} from 'next'
 import PageWrapper from '../components/structure/page-wrapper/page-wrapper';
-import IntroSpiel from '../components/intro-spiel/intro-spiel';
+import WineList from '../components/wine-list/wine-list';
 
-const Home: NextPage = () =>
+const WineListPage: NextPage = () =>
     <PageWrapper>
-        <IntroSpiel/>
+        <WineList/>
     </PageWrapper>
 
-export default Home;
+export default WineListPage;

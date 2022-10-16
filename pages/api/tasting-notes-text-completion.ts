@@ -2,21 +2,24 @@ import type {NextApiRequest, NextApiResponse} from 'next'
 import {getAccessToken, withApiAuthRequired} from '@auth0/nextjs-auth0';
 import axios from 'axios';
 import IWine from '../../interface/wine-list.interface';
+import {trimIndents} from '../../utilities/trim-indents';
 
 export default withApiAuthRequired(
     async function handler(req: NextApiRequest, res: NextApiResponse) {
         try {
             const {accessToken} = await getAccessToken(req, res);
             // Todo: return 400 if missing param
-            const prompt = req.body.prompt;
+            const tastingNotes = req.body.prompt;
             const wine = req.body.wine as IWine;
 
-            const promptIntro = 'Complete the following TASTING_NOTES ' +
-                `describing a ${wine.vintage} vintage ${wine.style} wine from the ${wine.region} of ${wine.country} ` +
-                `its flavour profile includes ${wine.flavourProfile.join(', ')}.`;
-            const preparedPrompt = `${promptIntro}\n\nTASTING_NOTES: ${prompt.trim()}`;
+            const prompt = trimIndents`
+                tasting notes: ${tastingNotes.trim()}
+                
+                complete the tasting notes describing a ${wine.vintage} vintage ${wine.style} wine from the ${wine.region} of ${wine.country} its flavours include ${wine.flavourProfile.join(', ')}:`;
 
-            const response = await axios.post('https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/completion', {prompt: preparedPrompt}, {
+            const response = await axios.post('https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/completion',
+                {prompt},
+                {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
