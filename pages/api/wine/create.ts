@@ -6,7 +6,6 @@ export default withApiAuthRequired(
     async function handler(req: NextApiRequest, res: NextApiResponse) {
         try {
             const {accessToken} = await getAccessToken(req, res);
-            console.log(accessToken);
             // Todo: return 400 if missing param
             const wine = req.body.wine
             const response = await axios.post(

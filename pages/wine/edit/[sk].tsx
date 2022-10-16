@@ -16,12 +16,10 @@ const EditWine: NextPage = () => {
     useEffect(() => {
         if(!user || !sk || !user.sub) return;
         (async () => {
-            console.log('user', user);
             const wine = await getWineRequest(
                 user.sub as string,
                 sk as string
             );
-            console.log('wine', wine)
             setStoredWine(wine);
         })()
     }, [user, sk]);

@@ -24,7 +24,6 @@ const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, wine, index, d
         setIsProcessing(true);
         try {
             const response = await tastingNotesReimagineRequest(tastingNote, wine);
-            console.log('r', response);
             setSubTastingNotes(response?.choices.map((choice: { text: string }) => choice.text) || [])
         } catch (e) {
             // Todo: handle error
