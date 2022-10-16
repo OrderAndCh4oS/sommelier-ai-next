@@ -12,7 +12,8 @@ export default withApiAuthRequired(
                 `https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/wine-list/${params[0]}/${params[1]}`,
                 {headers: {Authorization: `Bearer ${accessToken}`}}
             );
-
+            console.log('response', response);
+            console.log('data', response.data);
             res.status(200).json(response.data);
         } catch (e) {
             console.log(e);
