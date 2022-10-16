@@ -5,7 +5,7 @@ import IntroSpiel from '../components/intro-spiel/intro-spiel';
 import WineList from '../components/wine-list/wine-list';
 
 const Home: NextPage = () => {
-    const {user, error, isLoading} = useUser();
+    const {user} = useUser();
 
     return (
         <PageWrapper>
