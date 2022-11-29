@@ -8,11 +8,7 @@ export default interface IWine {
     vineyard: string,
     vintage: number,
     score: number,
-    tastingNote: string,
     flavourProfile: string[],
-    detailPrompt: string,
-    starterText: string,
-    embedding?: number[] // Todo: require this once they're being generated
     createdAt: string,
     updatedAt: string
 }

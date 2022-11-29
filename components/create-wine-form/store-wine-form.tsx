@@ -17,8 +17,6 @@ const schema = yup.object({
     vintage: yup.number().required('Required'),
     score: yup.number().required('Required'),
     flavourProfile: yup.string().required('Required'),
-    detailPrompt: yup.string().required('Required'),
-    starterText: yup.string().required('Required'),
 })
 
 let initialValues = {
@@ -30,8 +28,6 @@ let initialValues = {
     vintage: new Date().getFullYear(),
     score: 0,
     flavourProfile: '',
-    detailPrompt: '',
-    starterText: '',
 }
 
 type IWineFormValues = Omit<ICreateWine, 'userId' | 'tastingNote' | 'flavourProfile'> & { flavourProfile: string };
@@ -65,7 +61,6 @@ const StoreWineForm: FC<{ storedWine?: IWine | null }> = ({storedWine}) => {
                     ...values,
                     flavourProfile: values.flavourProfile.split(', '),
                     userId: user!.sub as string,
-                    tastingNote: 'xxxxx'
                 });
             } else {
                 const tempStoredWine: Partial<IWine> = {...storedWine};
@@ -181,30 +176,6 @@ const StoreWineForm: FC<{ storedWine?: IWine | null }> = ({storedWine}) => {
                     />
                     <div className={styles.errorMessage}>
                         <ErrorMessage name="flavourProfile"/>
-                    </div>
-                </div>
-                <div className={styles.formField}>
-                    <label htmlFor="detailPrompt">Details</label>
-                    <Field
-                        id="detailPrompt"
-                        name="detailPrompt"
-                        as="textarea"
-                        className={styles.textField}
-                    />
-                    <div className={styles.errorMessage}>
-                        <ErrorMessage name="detailPrompt"/>
-                    </div>
-                </div>
-                <div className={styles.formField}>
-                    <label htmlFor="starterText">Starter Text</label>
-                    <Field
-                        id="starterText"
-                        name="starterText"
-                        as="textarea"
-                        className={styles.textField}
-                    />
-                    <div className={styles.errorMessage}>
-                        <ErrorMessage name="starterText"/>
                     </div>
                 </div>
                 <button type="submit">Store Wine {isProcessing ? <SpinnerIcon/> : null}</button>
