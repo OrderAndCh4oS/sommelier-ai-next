@@ -1,6 +1,24 @@
-.loading, .selected {
+.loading, .saved {
     font-style: italic;
     font-size: 24px;
+}
+
+.listItem {
+    border: 1px solid var(--light-grey);
+    border-radius: 4px;
+    padding: 0 16px 16px;
+    position: relative;
+}
+
+.selected {
+    border: 1px solid var(--red);
+}
+
+.selectedText {
+    position: absolute;
+    bottom: 0;
+    right: 16px;
+    font-style: italic;
 }
 
 .tastingNoteText {

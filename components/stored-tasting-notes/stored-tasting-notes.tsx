@@ -36,7 +36,7 @@ const StoredTastingNotes: FC<{ wineSk: string }> = ({wineSk}) => {
             const newWine = await getWineRequest(user.sub!, wineSk);
             setWine(newWine)
         })()
-    }, [user]);
+    }, [user, wineSk]);
 
     if (!wine) return <p className={styles.loading}>Loading…</p>
 
@@ -45,13 +45,13 @@ const StoredTastingNotes: FC<{ wineSk: string }> = ({wineSk}) => {
             <h3>{wine.name}</h3>
             <p>{wine.country}, {wine.region}, {wine.vineyard}, {wine.vintage}</p>
             <p>Score: {wine.score}</p>
-            {hasSaved && <p className={styles.selected}>Saved Selection</p>}
+            {hasSaved && <p className={styles.saved}>Saved Selection</p>}
             <h4>Stored Notes</h4>
             <ol>
                 {wine.tastingNotes?.map(tastingNote => (
-                    <li>
-                        <div className={styles.listItem}>
-                            {tastingNote.sk === wine.tastingNoteSk && <p>Selected</p>}
+                    <li key={tastingNote.sk}>
+                        <div className={`${styles.listItem} ${tastingNote.sk === wine.tastingNoteSk ? styles.selected : ''}`}>
+                            {tastingNote.sk === wine.tastingNoteSk && <p className={styles.selectedText}>Selected</p>}
                             <p className={styles.tastingNoteText}>{tastingNote.text}</p>
                             <button onClick={handleSelect(tastingNote.sk)}>
                                 Save {isSelecting ? <SpinnerIcon/> : null}

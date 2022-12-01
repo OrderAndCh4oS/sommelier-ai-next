@@ -55,7 +55,7 @@ const WineList: FC = () => {
     return (
         <>
             <Link href="/wine/create">
-                <a><button>Create Wine</button></a>
+                <a className={styles.buttonLink}><button>Create Wine</button></a>
             </Link>
             <h2>Wine List</h2>
             {wineList.map(wine => (
