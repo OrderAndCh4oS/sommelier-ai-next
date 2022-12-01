@@ -61,8 +61,8 @@ const WineList: FC = () => {
                 <div key={wine.sk}>
                     <h3>{wine.name}</h3>
                     <p>{wine.country}, {wine.region}, {wine.vineyard}, {wine.vintage}</p>
-                    <p>{wine.score}</p>
-                    <p>{wine.tastingNote?.text}</p>
+                    <p>Score: {wine.score}</p>
+                    <p>{wine.tastingNote}</p>
                     <Link
                         href={{
                             pathname: '/wine/tasting-notes/[sk]',

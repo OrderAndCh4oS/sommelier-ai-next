@@ -3,7 +3,7 @@ import {ICreateTastingNote} from '../../interface/tasting-note.interface';
 
 const addTastingNoteRequest = async (tastingNote: ICreateTastingNote) => {
     // Todo: handle error responses
-    const response = await axios.put('/api/wine/tasting-note', {tastingNote});
+    const response = await axios.put('/api/wine/add-tasting-note', {tastingNote});
 
     return response.data;
 }

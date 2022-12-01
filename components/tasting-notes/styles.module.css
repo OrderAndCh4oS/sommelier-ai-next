@@ -20,3 +20,8 @@
     border: 1px solid var(--black);
     border-bottom: none;
 }
+
+.loading {
+    font-style: italic;
+    font-size: 24px;
+}

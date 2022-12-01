@@ -1,0 +1,8 @@
+.tastingNoteText {
+    font-size: 18px;
+}
+
+.buttonRow {
+    display: flex;
+    gap: 8px;
+}

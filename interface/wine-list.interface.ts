@@ -1,3 +1,6 @@
+import ITastingNote from './tasting-note.interface';
+
+
 export default interface IWine {
     userId: string
     sk: string
@@ -11,13 +14,9 @@ export default interface IWine {
     flavourProfile: string[]
     createdAt: string
     updatedAt: string
-    tastingNote?: {
-        userId: string
-        updatedAt: string
-        createdAt: string
-        sk: string
-        text: string
-    }
+    tastingNoteSk?: string
+    tastingNote?: string
+    tastingNotes?: ITastingNote[]
 }
 
 export type ICreateWine = Omit<IWine, 'sk' | 'createdAt' | 'updatedAt'>;

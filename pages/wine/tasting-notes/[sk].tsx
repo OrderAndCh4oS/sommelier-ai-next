@@ -13,6 +13,7 @@ const TastingNotesPage: NextPage = () => {
     const {sk} = router.query;
     const [wine, setWine] = useState<IWine | null>(null);
 
+    // Todo: React Query would be be useful here
     useEffect(() => {
         if(!user || !sk || !user.sub) return;
         (async () => {

@@ -12,6 +12,6 @@ export type ICreateTastingNote = Omit<ITastingNote, 'sk' | 'createdAt' | 'update
 export interface ISelectTastingNote {
     userId: string,
     wineSk: string,
-    "tastingNoteSk": string
+    tastingNoteSk: string
 
 }

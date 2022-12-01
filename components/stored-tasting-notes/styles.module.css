@@ -1,0 +1,8 @@
+.loading, .selected {
+    font-style: italic;
+    font-size: 24px;
+}
+
+.tastingNoteText {
+    font-size: 18px;
+}

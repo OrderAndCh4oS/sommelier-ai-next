@@ -6,6 +6,7 @@ import TastingNoteItem from '../tasting-note-item/tasting-note-item';
 import tastingNotesReimagineRequest from '../../requests/tasting-notes-reimagine.request';
 import styles from './styles.module.css';
 import IWine from '../../interface/wine-list.interface';
+import StoredTastingNotes from '../stored-tasting-notes/stored-tasting-notes';
 
 interface ITastingNotesProps {
     wine: IWine | null
@@ -14,7 +15,7 @@ interface ITastingNotesProps {
 const TastingNotes: FC<ITastingNotesProps> = ({wine}) => {
     const [results, setResults] = useState<string[]>([]);
     const [isProcessing, setIsProcessing] = useState(false);
-    const [currentTab, setCurrentTab] = useState<'generate' | 'reimagine'>('generate');
+    const [currentTab, setCurrentTab] = useState<'generate' | 'reimagine' | 'notes'>('generate');
 
     const handleSubmitCompletion = async ({text: prompt}: { text: string }, _: FormikHelpers<any>) => {
         setIsProcessing(true);
@@ -51,7 +52,9 @@ const TastingNotes: FC<ITastingNotesProps> = ({wine}) => {
         setIsProcessing(false);
     };
 
-    const handleTabChange = (tab: 'generate' | 'reimagine') => () => setCurrentTab(tab);
+    const handleTabChange = (tab: 'generate' | 'reimagine' | 'notes') => () => setCurrentTab(tab);
+
+    if (!wine) return <p className={styles.loading}>Loading…</p>
 
     return (
         <div>
@@ -67,6 +70,11 @@ const TastingNotes: FC<ITastingNotesProps> = ({wine}) => {
                     onClick={handleTabChange('reimagine')}
                 >Reimagine
                 </button>
+                <button
+                    className={[styles.tabButton, currentTab === 'notes' ? styles.active : ''].join(' ')}
+                    onClick={handleTabChange('notes')}
+                >Stored Notes
+                </button>
             </div>
             {currentTab === 'generate' ? <TextForm
                 handleSubmit={handleSubmitCompletion}
@@ -80,7 +88,8 @@ const TastingNotes: FC<ITastingNotesProps> = ({wine}) => {
                 buttonText={'Reimagine'}
                 placeholder="Scintillating citrus abounds in this fragrant ersatz dry riesling. Fantasy fruit trumps reality in this wacky creature that turns green apples into gold, peaches and apricots into fairy tales."
             /> : null}
-            {results.length ? (
+            {currentTab === 'notes' ? <StoredTastingNotes wineSk={wine.sk}/> : null}
+            {currentTab !== 'notes' && results.length ? (
                 <>
                     <h3>Suggestions</h3>
                     <ol>
@@ -89,7 +98,6 @@ const TastingNotes: FC<ITastingNotesProps> = ({wine}) => {
                                 key={`tn_${i}`}
                                 tastingNote={tastingNote}
                                 wine={wine}
-                                index={i}
                                 depth={1}
                             />)}
                     </ol>
