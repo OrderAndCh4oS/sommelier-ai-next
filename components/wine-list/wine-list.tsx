@@ -37,7 +37,7 @@ const DeleteWineButton: FC<IDeleteWineButtonProps> = ({tastingNote, handleRemove
 };
 
 const WineList: FC = () => {
-    const [wineList, setWineList] = useState<IWine[]>([]);
+    const [wineList, setWineList] = useState<IWine[] | null>(null);
     const {user} = useUser();
 
     useEffect(() => {
@@ -49,7 +49,7 @@ const WineList: FC = () => {
     }, [user]);
 
     const handleRemoveWine = (userId: string, sk: string) => {
-        setWineList(prevState => prevState.filter(w => w.sk !== sk && w.userId !== userId))
+        setWineList(prevState => prevState?.filter(w => w.sk !== sk && w.userId !== userId) ?? null)
     };
 
     return (
@@ -58,7 +58,8 @@ const WineList: FC = () => {
                 <a className={styles.buttonLink}><button>Create Wine</button></a>
             </Link>
             <h2>Wine List</h2>
-            {wineList.map(wine => (
+            {!wineList && <p className={styles.loading}>Loading…</p>}
+            {wineList?.map(wine => (
                 <div key={wine.sk}>
                     <h3>{wine.name}</h3>
                     <p>{wine.country}, {wine.region}, {wine.vineyard}, {wine.vintage}</p>
@@ -83,7 +84,6 @@ const WineList: FC = () => {
                         </Link>
                         <DeleteWineButton tastingNote={wine} handleRemoveWine={handleRemoveWine}/>
                     </div>
-
                 </div>
             ))}
         </>

@@ -54,8 +54,6 @@ const TastingNotes: FC<ITastingNotesProps> = ({wine}) => {
 
     const handleTabChange = (tab: 'generate' | 'reimagine' | 'notes') => () => setCurrentTab(tab);
 
-    if (!wine) return <p className={styles.loading}>Loading…</p>
-
     return (
         <div>
             <h2>Tasting Notes</h2>
@@ -76,33 +74,37 @@ const TastingNotes: FC<ITastingNotesProps> = ({wine}) => {
                 >Stored Notes
                 </button>
             </div>
-            {currentTab === 'generate' ? <TextForm
-                handleSubmit={handleSubmitCompletion}
-                isProcessing={isProcessing}
-                buttonText={'Generate'}
-                placeholder="Notes of blackberry, currant, and plum. There is a hint of oak on the finish…"
-            /> : null}
-            {currentTab === 'reimagine' ? <TextForm
-                handleSubmit={handleSubmitReimagine}
-                isProcessing={isProcessing}
-                buttonText={'Reimagine'}
-                placeholder="Scintillating citrus abounds in this fragrant ersatz dry riesling. Fantasy fruit trumps reality in this wacky creature that turns green apples into gold, peaches and apricots into fairy tales."
-            /> : null}
-            {currentTab === 'notes' ? <StoredTastingNotes wineSk={wine.sk}/> : null}
-            {currentTab !== 'notes' && results.length ? (
+            {!wine ? <p className={styles.loading}>Loading…</p> : (
                 <>
-                    <h3>Suggestions</h3>
-                    <ol>
-                        {results.map((tastingNote, i) =>
-                            <TastingNoteItem
-                                key={`tn_${i}`}
-                                tastingNote={tastingNote}
-                                wine={wine}
-                                depth={1}
-                            />)}
-                    </ol>
+                    {currentTab === 'generate' ? <TextForm
+                        handleSubmit={handleSubmitCompletion}
+                        isProcessing={isProcessing}
+                        buttonText={'Generate'}
+                        placeholder="Notes of blackberry, currant, and plum. There is a hint of oak on the finish…"
+                    /> : null}
+                    {currentTab === 'reimagine' ? <TextForm
+                        handleSubmit={handleSubmitReimagine}
+                        isProcessing={isProcessing}
+                        buttonText={'Reimagine'}
+                        placeholder="Scintillating citrus abounds in this fragrant ersatz dry riesling. Fantasy fruit trumps reality in this wacky creature that turns green apples into gold, peaches and apricots into fairy tales."
+                    /> : null}
+                    {currentTab === 'notes' ? <StoredTastingNotes wineSk={wine.sk}/> : null}
+                    {currentTab !== 'notes' && results.length ? (
+                        <>
+                            <h3>Suggestions</h3>
+                            <ol>
+                                {results.map((tastingNote, i) =>
+                                    <TastingNoteItem
+                                        key={`tn_${i}`}
+                                        tastingNote={tastingNote}
+                                        wine={wine}
+                                        depth={1}
+                                    />)}
+                            </ol>
+                        </>
+                    ) : null}
                 </>
-            ) : null}
+            )}
         </div>
     )
 }
