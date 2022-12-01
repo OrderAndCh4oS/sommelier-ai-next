@@ -1,10 +1,10 @@
-import IWine from '../../interface/tastingNote-list.interface';
 import {FC, useEffect, useState} from 'react';
 import {useUser} from '@auth0/nextjs-auth0';
-import getWineListByUserRequest from '../../requests/tastingNote/get-tastingNote-list-by-user.request';
 import Link from 'next/link';
-import deleteWineRequest from '../../requests/tastingNote/delete-tastingNote.request';
 import SpinnerIcon from '../icons/spinner.icon';
+import deleteWineRequest from '../../requests/wine/delete-wine.request';
+import getWineListByUserRequest from '../../requests/wine/get-wine-list-by-user.request';
+import IWine from '../../interface/wine-list.interface';
 
 interface IDeleteWineButtonProps {
     tastingNote: IWine,
@@ -57,16 +57,16 @@ const WineList: FC = () => {
                 <button>Create Wine</button>
             </Link>
             <h2>Wine List</h2>
-            {wineList.map(tastingNote => (
-                <div key={tastingNote.sk}>
-                    <h3>{tastingNote.name}</h3>
-                    <p>{tastingNote.country}, {tastingNote.region}, {tastingNote.vineyard}, {tastingNote.vintage}</p>
-                    <p>{tastingNote.score}</p>
-                    <p>{tastingNote.tastingNote}</p>
+            {wineList.map(wine => (
+                <div key={wine.sk}>
+                    <h3>{wine.name}</h3>
+                    <p>{wine.country}, {wine.region}, {wine.vineyard}, {wine.vintage}</p>
+                    <p>{wine.score}</p>
+                    <p>{wine.tastingNote?.text}</p>
                     <Link
                         href={{
                             pathname: '/tastingNote/tasting-notes/[sk]',
-                            query: {sk: tastingNote.sk},
+                            query: {sk: wine.sk},
                         }}
                     >
                         <button className="button">Tasting Notes</button>
@@ -74,12 +74,12 @@ const WineList: FC = () => {
                     <Link
                         href={{
                             pathname: '/tastingNote/edit/[sk]',
-                            query: {sk: tastingNote.sk},
+                            query: {sk: wine.sk},
                         }}
                     >
                         <button className="button">Edit</button>
                     </Link>
-                    <DeleteWineButton tastingNote={tastingNote} handleRemoveWine={handleRemoveWine}/>
+                    <DeleteWineButton tastingNote={wine} handleRemoveWine={handleRemoveWine}/>
                 </div>
             ))}
         </>
