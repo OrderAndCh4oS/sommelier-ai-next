@@ -60,11 +60,13 @@ const TastingNotes: FC<ITastingNotesProps> = ({wine}) => {
                 <button
                     className={[styles.tabButton, currentTab === 'generate' ? styles.active : ''].join(' ')}
                     onClick={handleTabChange('generate')}
-                >Generate</button>
+                >Generate
+                </button>
                 <button
                     className={[styles.tabButton, currentTab === 'reimagine' ? styles.active : ''].join(' ')}
                     onClick={handleTabChange('reimagine')}
-                >Reimagine</button>
+                >Reimagine
+                </button>
             </div>
             {currentTab === 'generate' ? <TextForm
                 handleSubmit={handleSubmitCompletion}
