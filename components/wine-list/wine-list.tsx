@@ -54,7 +54,7 @@ const WineList: FC = () => {
     return (
         <>
             <Link href="/wine/create">
-                <button>Create Wine</button>
+                <a><button>Create Wine</button></a>
             </Link>
             <h2>Wine List</h2>
             {wineList.map(wine => (
@@ -69,7 +69,7 @@ const WineList: FC = () => {
                             query: {sk: wine.sk},
                         }}
                     >
-                        <button className="button">Tasting Notes</button>
+                        <a><button className="button">Tasting Notes</button></a>
                     </Link>
                     <Link
                         href={{
@@ -77,7 +77,7 @@ const WineList: FC = () => {
                             query: {sk: wine.sk},
                         }}
                     >
-                        <button className="button">Edit</button>
+                        <a><button className="button">Edit</button></a>
                     </Link>
                     <DeleteWineButton tastingNote={wine} handleRemoveWine={handleRemoveWine}/>
                 </div>
