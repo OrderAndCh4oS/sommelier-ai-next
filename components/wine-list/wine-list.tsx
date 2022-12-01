@@ -65,7 +65,7 @@ const WineList: FC = () => {
                     <p>{wine.tastingNote?.text}</p>
                     <Link
                         href={{
-                            pathname: '/tastingNote/tasting-notes/[sk]',
+                            pathname: '/wine/tasting-notes/[sk]',
                             query: {sk: wine.sk},
                         }}
                     >
@@ -73,7 +73,7 @@ const WineList: FC = () => {
                     </Link>
                     <Link
                         href={{
-                            pathname: '/tastingNote/edit/[sk]',
+                            pathname: '/wine/edit/[sk]',
                             query: {sk: wine.sk},
                         }}
                     >
