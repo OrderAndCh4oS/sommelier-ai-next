@@ -5,6 +5,7 @@ import SpinnerIcon from '../icons/spinner.icon';
 import deleteWineRequest from '../../requests/wine/delete-wine.request';
 import getWineListByUserRequest from '../../requests/wine/get-wine-list-by-user.request';
 import IWine from '../../interface/wine-list.interface';
+import styles from './styles.module.css';
 
 interface IDeleteWineButtonProps {
     tastingNote: IWine,
@@ -62,24 +63,27 @@ const WineList: FC = () => {
                     <h3>{wine.name}</h3>
                     <p>{wine.country}, {wine.region}, {wine.vineyard}, {wine.vintage}</p>
                     <p>Score: {wine.score}</p>
-                    <p>{wine.tastingNote}</p>
-                    <Link
-                        href={{
-                            pathname: '/wine/tasting-notes/[sk]',
-                            query: {sk: wine.sk},
-                        }}
-                    >
-                        <a><button className="button">Tasting Notes</button></a>
-                    </Link>
-                    <Link
-                        href={{
-                            pathname: '/wine/edit/[sk]',
-                            query: {sk: wine.sk},
-                        }}
-                    >
-                        <a><button className="button">Edit</button></a>
-                    </Link>
-                    <DeleteWineButton tastingNote={wine} handleRemoveWine={handleRemoveWine}/>
+                    {wine.tastingNote && <><h4>Tasting Notes</h4><p>{wine.tastingNote}</p></>}
+                    <div className={styles.buttonRow}>
+                        <Link
+                            href={{
+                                pathname: '/wine/tasting-notes/[sk]',
+                                query: {sk: wine.sk},
+                            }}
+                        >
+                            <a className={styles.buttonLink}><button className="button">Tasting Notes</button></a>
+                        </Link>
+                        <Link
+                            href={{
+                                pathname: '/wine/edit/[sk]',
+                                query: {sk: wine.sk},
+                            }}
+                        >
+                            <a className={styles.buttonLink}><button className="button">Edit</button></a>
+                        </Link>
+                        <DeleteWineButton tastingNote={wine} handleRemoveWine={handleRemoveWine}/>
+                    </div>
+
                 </div>
             ))}
         </>
