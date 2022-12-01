@@ -1,17 +1,17 @@
-import IWine from '../../interface/wine-list.interface';
+import IWine from '../../interface/tastingNote-list.interface';
 import {FC, useEffect, useState} from 'react';
 import {useUser} from '@auth0/nextjs-auth0';
-import getWineListByUserRequest from '../../requests/wine/get-wine-list-by-user.request';
+import getWineListByUserRequest from '../../requests/tastingNote/get-tastingNote-list-by-user.request';
 import Link from 'next/link';
-import deleteWineRequest from '../../requests/wine/delete-wine.request';
+import deleteWineRequest from '../../requests/tastingNote/delete-tastingNote.request';
 import SpinnerIcon from '../icons/spinner.icon';
 
 interface IDeleteWineButtonProps {
-    wine: IWine,
+    tastingNote: IWine,
     handleRemoveWine: (userId: string, sk: string) => void
 }
 
-const DeleteWineButton: FC<IDeleteWineButtonProps> = ({wine, handleRemoveWine}) => {
+const DeleteWineButton: FC<IDeleteWineButtonProps> = ({tastingNote, handleRemoveWine}) => {
     const [isProcessing, setIsProcessing] = useState(false);
     const {user} = useUser();
 
@@ -29,7 +29,7 @@ const DeleteWineButton: FC<IDeleteWineButtonProps> = ({wine, handleRemoveWine}) 
     };
 
     return (
-        <button onClick={handleDelete(wine.sk)}>
+        <button onClick={handleDelete(tastingNote.sk)}>
             Delete {isProcessing ? <SpinnerIcon/> : null}
         </button>
     );
@@ -53,33 +53,33 @@ const WineList: FC = () => {
 
     return (
         <>
-            <Link href="/wine/create">
+            <Link href="/tastingNote/create">
                 <button>Create Wine</button>
             </Link>
             <h2>Wine List</h2>
-            {wineList.map(wine => (
-                <div key={wine.sk}>
-                    <h3>{wine.name}</h3>
-                    <p>{wine.country}, {wine.region}, {wine.vineyard}, {wine.vintage}</p>
-                    <p>{wine.score}</p>
-                    <p>{wine.tastingNote}</p>
+            {wineList.map(tastingNote => (
+                <div key={tastingNote.sk}>
+                    <h3>{tastingNote.name}</h3>
+                    <p>{tastingNote.country}, {tastingNote.region}, {tastingNote.vineyard}, {tastingNote.vintage}</p>
+                    <p>{tastingNote.score}</p>
+                    <p>{tastingNote.tastingNote}</p>
                     <Link
                         href={{
-                            pathname: '/wine/tasting-notes/[sk]',
-                            query: {sk: wine.sk},
+                            pathname: '/tastingNote/tasting-notes/[sk]',
+                            query: {sk: tastingNote.sk},
                         }}
                     >
                         <button className="button">Tasting Notes</button>
                     </Link>
                     <Link
                         href={{
-                            pathname: '/wine/edit/[sk]',
-                            query: {sk: wine.sk},
+                            pathname: '/tastingNote/edit/[sk]',
+                            query: {sk: tastingNote.sk},
                         }}
                     >
                         <button className="button">Edit</button>
                     </Link>
-                    <DeleteWineButton wine={wine} handleRemoveWine={handleRemoveWine}/>
+                    <DeleteWineButton tastingNote={tastingNote} handleRemoveWine={handleRemoveWine}/>
                 </div>
             ))}
         </>
