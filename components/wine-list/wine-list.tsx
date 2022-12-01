@@ -53,7 +53,7 @@ const WineList: FC = () => {
 
     return (
         <>
-            <Link href="/tastingNote/create">
+            <Link href="/wine/create">
                 <button>Create Wine</button>
             </Link>
             <h2>Wine List</h2>
