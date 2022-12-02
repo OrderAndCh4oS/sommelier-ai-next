@@ -1,7 +1,17 @@
 .footer {
     margin-top: auto;
     display: flex;
+    flex-direction: column;
     box-sizing: border-box;
     width: 100%;
     padding: 10px 40px;
+}
+
+.socialLinks {
+    margin-bottom: 0;
+}
+
+.inlineSvg {
+    position: relative;
+    top: 4px;
 }
