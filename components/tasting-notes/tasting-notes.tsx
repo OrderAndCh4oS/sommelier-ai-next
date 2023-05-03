@@ -17,6 +17,8 @@ const TastingNotes: FC<ITastingNotesProps> = ({wine}) => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [currentTab, setCurrentTab] = useState<'generate' | 'reimagine' | 'notes'>('generate');
 
+    console.log('WINE', wine)
+
     const handleSubmitCompletion = async ({text: prompt}: { text: string }, _: FormikHelpers<any>) => {
         setIsProcessing(true);
         setResults([]);

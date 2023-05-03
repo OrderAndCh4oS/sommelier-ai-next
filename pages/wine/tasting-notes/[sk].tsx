@@ -8,22 +8,19 @@ import IWine from '../../../interface/wine-list.interface';
 import getWineRequest from '../../../requests/wine/get-wine.request';
 
 const TastingNotesPage: NextPage = () => {
-    const {user} = useUser();
     const router = useRouter();
     const {sk} = router.query;
     const [wine, setWine] = useState<IWine | null>(null);
 
     // Todo: React Query would be be useful here
     useEffect(() => {
-        if(!user || !sk || !user.sub) return;
+        if(!sk) return;
         (async () => {
-            const wine = await getWineRequest(
-                user.sub as string,
-                sk as string
-            );
+            console.log('SK', sk);
+            const wine = await getWineRequest(sk as string);
             setWine(wine);
         })()
-    }, [user, sk]);
+    }, [sk]);
 
     return (
         <PageWrapper>

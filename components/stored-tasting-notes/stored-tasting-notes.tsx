@@ -7,8 +7,8 @@ import SpinnerIcon from '../icons/spinner.icon';
 import selectTastingNoteRequest from '../../requests/wine/select-tasting-note.request';
 
 const StoredTastingNotes: FC<{ wineSk: string }> = ({wineSk}) => {
-    const [wine, setWine] = useState<IWine | null>(null);
     const {user} = useUser();
+    const [wine, setWine] = useState<IWine | null>(null);
     const [isSelecting, setIsSelecting] = useState(false);
     const [hasSaved, setHasSaved] = useState(false);
 
@@ -19,7 +19,7 @@ const StoredTastingNotes: FC<{ wineSk: string }> = ({wineSk}) => {
                 wineSk: wine!.sk,
                 tastingNoteSk
             });
-            const newWine = await getWineRequest(user!.sub!, wineSk);
+            const newWine = await getWineRequest(wineSk);
             setWine(newWine)
             setHasSaved(true);
         } catch (e) {
@@ -32,7 +32,7 @@ const StoredTastingNotes: FC<{ wineSk: string }> = ({wineSk}) => {
     useEffect(() => {
         if (!user?.sub) return
         (async () => {
-            const newWine = await getWineRequest(user.sub!, wineSk);
+            const newWine = await getWineRequest(wineSk);
             setWine(newWine)
         })()
     }, [user, wineSk]);

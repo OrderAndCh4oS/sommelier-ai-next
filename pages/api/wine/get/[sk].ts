@@ -6,10 +6,10 @@ export default withApiAuthRequired(
     async function handler(req: NextApiRequest, res: NextApiResponse) {
         try {
             const {accessToken} = await getAccessToken(req, res);
-            // Todo: return 404 if not params length two
-            const params = req.query.params!;
+            const {sk} = req.query as {sk: string};
+            console.log('REQ SK', sk)
             const response = await axios.get(
-                `https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/wine-list/${params[0]}`,
+                `https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/wine-list/${encodeURIComponent(sk)}`,
                 {headers: {Authorization: `Bearer ${accessToken}`}}
             );
             console.log('response', response);
