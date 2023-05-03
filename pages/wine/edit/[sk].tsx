@@ -14,15 +14,14 @@ const EditWine: NextPage = () => {
     const [storedWine, setStoredWine] = useState<IWine | null>(null);
 
     useEffect(() => {
-        if(!user || !sk || !user.sub) return;
+        if(!sk) return;
         (async () => {
             const wine = await getWineRequest(
-                user.sub as string,
                 sk as string
             );
             setStoredWine(wine);
         })()
-    }, [user, sk]);
+    }, [sk]);
 
     return (
         <PageWrapper>
