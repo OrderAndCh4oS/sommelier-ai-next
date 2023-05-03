@@ -16,7 +16,6 @@ const TastingNotesPage: NextPage = () => {
     useEffect(() => {
         if(!sk) return;
         (async () => {
-            console.log('SK', sk);
             const wine = await getWineRequest(sk as string);
             setWine(wine);
         })()

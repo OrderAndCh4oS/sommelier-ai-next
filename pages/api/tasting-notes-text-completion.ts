@@ -24,8 +24,6 @@ export default withApiAuthRequired(
                 Tasting Notes: ${tastingNotes.trim()}`;
             }
 
-            console.log('prompt', prompt);
-
             const response = await axios.post('https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/completion',
                 {prompt},
                 {
