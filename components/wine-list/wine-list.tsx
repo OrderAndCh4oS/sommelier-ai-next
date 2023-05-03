@@ -55,7 +55,7 @@ const WineList: FC = () => {
     return (
         <>
             <Link href="/wine/create">
-                <a className={styles.buttonLink}><button>Create Wine</button></a>
+                <a className={styles.buttonLink}><button>Add Wine</button></a>
             </Link>
             <h2>Wine List</h2>
             {!wineList && <p className={styles.loading}>Loading…</p>}
