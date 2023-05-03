@@ -49,7 +49,7 @@ const WineList: FC = () => {
     }, [user]);
 
     const handleRemoveWine = (userId: string, sk: string) => {
-        setWineList(prevState => prevState?.filter(w => w.sk !== sk && w.userId !== userId) ?? null)
+        setWineList(prevState => prevState?.filter(w => w.sk !== sk) ?? null)
     };
 
     return (
