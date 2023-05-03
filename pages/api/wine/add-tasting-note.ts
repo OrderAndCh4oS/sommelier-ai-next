@@ -9,7 +9,7 @@ export default withApiAuthRequired(
             // Todo: return 400 if missing param
             const tastingNote = req.body.tastingNote
             const response = await axios.put(
-                `https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/wine-list/${tastingNote.userId}/tasting-note`,
+                `https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/wine-list/tasting-note`,
                 tastingNote,
                 {headers: {Authorization: `Bearer ${accessToken}`}}
             );

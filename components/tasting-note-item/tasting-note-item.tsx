@@ -40,7 +40,6 @@ const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, wine, depth}) 
         try {
             const response = await addTastingNoteRequest({
                 wineSk: wine!.sk,
-                userId: user!.sub!,
                 text: tastingNote
             });
             setSubTastingNotes(response?.choices.map((choice: { text: string }) => choice.text) || [])
@@ -63,9 +62,11 @@ const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, wine, depth}) 
                             </button>
                         ) : null
                     }
-                    <button onClick={handleSave}>
-                        Save {isSaving ? <SpinnerIcon/> : null}
-                    </button>
+                    {wine ? (
+                        <button onClick={handleSave}>
+                            Save {isSaving ? <SpinnerIcon/> : null}
+                        </button>
+                    ) : null}
                 </div>
 
                 {subTastingNotes.length ? (

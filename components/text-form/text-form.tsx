@@ -14,7 +14,7 @@ interface IPostPromptFormProps<T> {
     handleSubmit: (values: T, formikHelpers: FormikHelpers<T>) => void | Promise<any>
     isProcessing: boolean
     buttonText: string,
-    placeholder: string
+    placeholder: string,
 }
 
 const TextForm: FC<IPostPromptFormProps<{ text: string }>> = ({

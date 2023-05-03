@@ -6,9 +6,8 @@ export default withApiAuthRequired(
     async function handler(req: NextApiRequest, res: NextApiResponse) {
         try {
             const {accessToken} = await getAccessToken(req, res);
-            const userId = req.query.userId!;
             const response = await axios.get(
-                `https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/wine-list/${userId}`,
+                `https://ao2jyzs9o3.execute-api.eu-west-1.amazonaws.com/prod/wine-list`,
                 {headers: {Authorization: `Bearer ${accessToken}`}}
             );
 

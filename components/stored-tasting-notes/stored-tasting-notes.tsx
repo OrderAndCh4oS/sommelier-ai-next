@@ -16,7 +16,6 @@ const StoredTastingNotes: FC<{ wineSk: string }> = ({wineSk}) => {
         setIsSelecting(true);
         try {
             await selectTastingNoteRequest({
-                userId: user!.sub!,
                 wineSk: wine!.sk,
                 tastingNoteSk
             });
@@ -54,7 +53,7 @@ const StoredTastingNotes: FC<{ wineSk: string }> = ({wineSk}) => {
                             {tastingNote.sk === wine.tastingNoteSk && <p className={styles.selectedText}>Selected</p>}
                             <p className={styles.tastingNoteText}>{tastingNote.text}</p>
                             <button onClick={handleSelect(tastingNote.sk)}>
-                                Save {isSelecting ? <SpinnerIcon/> : null}
+                                Select {isSelecting ? <SpinnerIcon/> : null}
                             </button>
                         </div>
                     </li>

@@ -2,7 +2,6 @@ import ITastingNote from './tasting-note.interface';
 
 
 export default interface IWine {
-    userId: string
     sk: string
     name: string
     style: string

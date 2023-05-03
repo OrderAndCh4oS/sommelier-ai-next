@@ -60,7 +60,6 @@ const StoreWineForm: FC<{ storedWine?: IWine | null }> = ({storedWine}) => {
                 await createWineRequest({
                     ...values,
                     flavourProfile: values.flavourProfile.split(', '),
-                    userId: user!.sub as string,
                 });
             } else {
                 const tempStoredWine: Partial<IWine> = {...storedWine};

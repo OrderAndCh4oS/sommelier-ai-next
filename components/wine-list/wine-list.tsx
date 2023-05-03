@@ -59,6 +59,7 @@ const WineList: FC = () => {
             </Link>
             <h2>Wine List</h2>
             {!wineList && <p className={styles.loading}>Loading…</p>}
+            {wineList && !wineList.length ? <p className={styles.loading}>No wines found</p> : null}
             {wineList?.map(wine => (
                 <div key={wine.sk}>
                     <h3>{wine.name}</h3>

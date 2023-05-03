@@ -16,6 +16,9 @@ const HeaderBar = () => {
                 {user
                     ? (
                         <>
+                            <Link href="/">
+                                <a className={styles.headerMenuLink}>Tasting Notes</a>
+                            </Link>
                             <Link href="/wine-list">
                                 <a className={styles.headerMenuLink}>Wine List</a>
                             </Link>

@@ -10,13 +10,19 @@ export default withApiAuthRequired(
             const {accessToken} = await getAccessToken(req, res);
             // Todo: return 400 if missing param
             const tastingNotes = req.body.prompt;
-            const wine = req.body.wine as IWine;
+            const wine = req.body?.wine ?? null as IWine | null;
 
-            console.log('wine', wine);
+            let prompt: string;
 
-            const prompt = trimIndents`Complete the following Tasting Notes describing a ${wine.vintage} vintage ${wine.style} wine from the ${wine.region} of ${wine.country} its flavour profile includes ${wine.flavourProfile.join(', ')}.
+            if(wine) {
+                prompt = trimIndents`Complete the following Tasting Notes describing a ${wine.vintage} vintage ${wine.style} wine from the ${wine.region} of ${wine.country} its flavour profile includes ${wine.flavourProfile.join(', ')}.
                 
                 Tasting Notes: ${tastingNotes.trim()}`;
+            } else {
+                prompt = trimIndents`Complete the following wine Tasting Notes in the style of a experienced sommelier.
+                
+                Tasting Notes: ${tastingNotes.trim()}`;
+            }
 
             console.log('prompt', prompt);
 

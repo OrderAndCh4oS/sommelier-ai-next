@@ -1,5 +1,4 @@
 export default interface ITastingNote {
-    userId: string,
     sk: string,
     wineSk: string,
     text: string,
@@ -10,7 +9,6 @@ export default interface ITastingNote {
 export type ICreateTastingNote = Omit<ITastingNote, 'sk' | 'createdAt' | 'updatedAt'>;
 
 export interface ISelectTastingNote {
-    userId: string,
     wineSk: string,
     tastingNoteSk: string
 
