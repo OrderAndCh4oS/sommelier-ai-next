@@ -5,6 +5,9 @@ import styles from './styles.module.css';
 import IWine from '../../interface/wine-list.interface';
 import addTastingNoteRequest from '../../requests/wine/add-tasting-note.request';
 import {useUser} from '@auth0/nextjs-auth0';
+import {FormikHelpers} from "formik";
+import tastingNotesTextCompletionRequest from "../../requests/tasting-notes-text-completion.request";
+import {IChoice} from "../../interface/misc";
 
 interface ITastingNoteItemProps {
     tastingNote: string
@@ -16,7 +19,6 @@ const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, wine, depth}) 
     const [subTastingNotes, setSubTastingNotes] = useState([]);
     const [isProcessing, setIsProcessing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
-    const {user} = useUser();
 
     const handleReimagine = async () => {
         if (depth === 3) {
@@ -26,8 +28,15 @@ const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, wine, depth}) 
         }
         setIsProcessing(true);
         try {
-            const response = await tastingNotesReimagineRequest(tastingNote, wine);
-            setSubTastingNotes(response?.choices.map((choice: { text: string }) => choice.text) || [])
+            let wineData = null;
+            if (wine) {
+                wineData = {...wine};
+                for (const key of ['createdAt', 'updatedAt', 'sk', 'tastingNoteSk', 'tastingNote', 'tastingNotes', 'userId']) {
+                    delete wineData[key];
+                }
+            }
+            const response = await tastingNotesTextCompletionRequest(tastingNote, wineData);
+            setSubTastingNotes(response?.choices.map((choice: IChoice) => choice.message.content.trim()) || [])
         } catch (e) {
             // Todo: handle error
             console.log(e)
