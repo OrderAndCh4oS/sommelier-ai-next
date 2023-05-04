@@ -1,7 +1,7 @@
 import styles from "./styles.module.css";
 import {forwardRef, HTMLProps} from "react";
 
-export const AutoExpandTextArea = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>((props, ref) => {
+const AutoExpandTextArea = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>((props, ref) => {
     const {children, ...rest} = props;
     return <div
         ref={ref}
@@ -11,3 +11,7 @@ export const AutoExpandTextArea = forwardRef<HTMLDivElement, HTMLProps<HTMLDivEl
         {...rest}
     >{children}</div>
 });
+
+AutoExpandTextArea.displayName = 'AutoExpandTextArea';
+
+export default AutoExpandTextArea;

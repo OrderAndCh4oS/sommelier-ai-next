@@ -5,7 +5,7 @@ import IWine from '../../interface/wine-list.interface';
 import addTastingNoteRequest from '../../requests/wine/add-tasting-note.request';
 import tastingNotesTextCompletionRequest from "../../requests/tasting-notes-text-completion.request";
 import {IChoice} from "../../interface/misc";
-import {AutoExpandTextArea} from "../form-elements/auto-expand-text-area";
+import AutoExpandTextArea from "../form-elements/auto-expand-text-area";
 
 interface ITastingNoteItemProps {
     tastingNote: string
