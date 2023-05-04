@@ -1,6 +1,5 @@
 import {FC, useState} from 'react';
-import TextForm from '../text-form/text-form';
-import {FormikHelpers} from 'formik';
+import TextForm, {TastingNotesFormData} from '../text-form/text-form';
 import wineRecommendationRequest from '../../requests/wine-recommendation.request';
 import WineSuggestion from '../wine-suggestion/wine-suggestion';
 
@@ -24,7 +23,7 @@ const TastingNotesTextCompletion: FC = () => {
     const [results, setResults] = useState<IResults>({search: [], recommendations: []});
     const [isProcessing, setIsProcessing] = useState(false);
 
-    const handleSubmit = async ({text: query}: { text: string }, _: FormikHelpers<any>) => {
+    const handleSubmit = async ({text: query}: TastingNotesFormData) => {
         setIsProcessing(true);
         setResults({search: [], recommendations: []});
         try {
@@ -53,7 +52,7 @@ const TastingNotesTextCompletion: FC = () => {
         <div>
             <h2>Wine Recommendations</h2>
             <TextForm
-                handleSubmit={handleSubmit}
+                onSubmit={handleSubmit}
                 isProcessing={isProcessing}
                 buttonText={'Discover'}
                 placeholder="Fruity, reminiscent of blackberries and cherries…"

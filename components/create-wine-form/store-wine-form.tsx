@@ -1,12 +1,12 @@
 import {FC, useState} from 'react';
-import {ErrorMessage, Field, Form, Formik} from 'formik';
 import * as yup from 'yup';
 import styles from './styles.module.css'
 import SpinnerIcon from '../icons/spinner.icon';
 import IWine, {ICreateWine, IUpdateWine} from '../../interface/wine-list.interface';
 import createWineRequest from '../../requests/wine/create-wine.request';
-import {useUser} from '@auth0/nextjs-auth0';
 import updateWineRequest from '../../requests/wine/update-wine.request';
+import {yupResolver} from "@hookform/resolvers/yup";
+import {useForm} from "react-hook-form";
 
 const schema = yup.object({
     name: yup.string().required('Required'),
@@ -17,7 +17,8 @@ const schema = yup.object({
     vintage: yup.number().required('Required'),
     score: yup.number().required('Required'),
     flavourProfile: yup.string().required('Required'),
-})
+}).required();
+type FormData = yup.InferType<typeof schema>;
 
 let initialValues = {
     name: '',
@@ -49,11 +50,14 @@ const removeNonStoreWineFormValues = (storedWine: IWine) => {
 
 const StoreWineForm: FC<{ storedWine?: IWine | null }> = ({storedWine}) => {
     const [isProcessing, setIsProcessing] = useState(false);
-    const {user} = useUser();
+
+    const {register, handleSubmit, formState: {errors}} = useForm<FormData>({
+        resolver: yupResolver(schema)
+    });
 
     if (storedWine) removeNonStoreWineFormValues(storedWine);
 
-    const handleSubmit = async (values: IWineFormValues) => {
+    const onSubmit = async (values: FormData) => {
         setIsProcessing(true);
         try {
             if (!storedWine) {
@@ -80,106 +84,105 @@ const StoreWineForm: FC<{ storedWine?: IWine | null }> = ({storedWine}) => {
     }
 
     return (
-        <Formik
-            initialValues={initialValues}
-            validationSchema={schema}
-            onSubmit={handleSubmit}
-            enableReinitialize={true}
-        >
-            <Form>
-                <div className={styles.formField}>
-                    <label htmlFor="name">Name</label>
-                    <Field
-                        id="name"
-                        name="name"
-                        className={styles.textField}
-                    />
-                    <div className={styles.errorMessage}>
-                        <ErrorMessage name="name"/>
-                    </div>
-                </div>
-                <div className={styles.formField}>
-                    <label htmlFor="score">Score (0-100)</label>
-                    <Field
-                        id="score"
-                        name="score"
-                        type="number"
-                        className={styles.textField}
-                    />
-                    <div className={styles.errorMessage}>
-                        <ErrorMessage name="score"/>
-                    </div>
-                </div>
-                <div className={styles.formField}>
-                    <label htmlFor="style">Style</label>
-                    <Field
-                        id="style"
-                        name="style"
-                        className={styles.textField}
-                    />
-                    <div className={styles.errorMessage}>
-                        <ErrorMessage name="style"/>
-                    </div>
-                </div>
-                <div className={styles.formField}>
-                    <label htmlFor="country">Country</label>
-                    <Field
-                        id="country"
-                        name="country"
-                        className={styles.textField}
-                    />
-                    <div className={styles.errorMessage}>
-                        <ErrorMessage name="country"/>
-                    </div>
-                </div>
-                <div className={styles.formField}>
-                    <label htmlFor="region">Region</label>
-                    <Field
-                        id="region"
-                        name="region"
-                        className={styles.textField}
-                    />
-                    <div className={styles.errorMessage}>
-                        <ErrorMessage name="region"/>
-                    </div>
-                </div>
-                <div className={styles.formField}>
-                    <label htmlFor="vineyard">Vineyard</label>
-                    <Field
-                        id="vineyard"
-                        name="vineyard"
-                        className={styles.textField}
-                    />
-                    <div className={styles.errorMessage}>
-                        <ErrorMessage name="vineyard"/>
-                    </div>
-                </div>
-                <div className={styles.formField}>
-                    <label htmlFor="vintage">Vintage</label>
-                    <Field
-                        id="vintage"
-                        name="vintage"
-                        type="number"
-                        className={styles.textField}
-                    />
-                    <div className={styles.errorMessage}>
-                        <ErrorMessage name="vintage"/>
-                    </div>
-                </div>
-                <div className={styles.formField}>
-                    <label htmlFor="flavourProfile">Flavours (comma seperated)</label>
-                    <Field
-                        id="flavourProfile"
-                        name="flavourProfile"
-                        className={styles.textField}
-                    />
-                    <div className={styles.errorMessage}>
-                        <ErrorMessage name="flavourProfile"/>
-                    </div>
-                </div>
-                <button type="submit">Store Wine {isProcessing ? <SpinnerIcon/> : null}</button>
-            </Form>
-        </Formik>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles.formField}>
+                <label htmlFor="name">Name</label>
+                <input
+                    {...register("name")}
+                    className={styles.textField}
+                />
+                {errors.name?.message && (
+                    <p className={styles.errorMessage}>
+                        {errors.name.message}
+                    </p>
+                )}
+            </div>
+            <div className={styles.formField}>
+                <label htmlFor="score">Score (0-100)</label>
+                <input
+                    {...register("score")}
+                    className={styles.textField}
+                />
+                {errors.score?.message && (
+                    <p className={styles.errorMessage}>
+                        {errors.score.message}
+                    </p>
+                )}
+            </div>
+            <div className={styles.formField}>
+                <label htmlFor="style">Style</label>
+                <input
+                    {...register("style")}
+                    className={styles.textField}
+                />
+                {errors.style?.message && (
+                    <p className={styles.errorMessage}>
+                        {errors.style.message}
+                    </p>
+                )}
+            </div>
+            <div className={styles.formField}>
+                <label htmlFor="country">Country</label>
+                <input
+                    {...register("country")}
+                    className={styles.textField}
+                />
+                {errors.country?.message && (
+                    <p className={styles.errorMessage}>
+                        {errors.country.message}
+                    </p>
+                )}
+            </div>
+            <div className={styles.formField}>
+                <label htmlFor="region">Region</label>
+                <input
+                    {...register("region")}
+                    className={styles.textField}
+                />
+                {errors.region?.message && (
+                    <p className={styles.errorMessage}>
+                        {errors.region.message}
+                    </p>
+                )}
+            </div>
+            <div className={styles.formField}>
+                <label htmlFor="vineyard">Vineyard</label>
+                <input
+                    {...register("vineyard")}
+                    className={styles.textField}
+                />
+                {errors.vineyard?.message && (
+                    <p className={styles.errorMessage}>
+                        {errors.vineyard.message}
+                    </p>
+                )}
+            </div>
+            <div className={styles.formField}>
+                <label htmlFor="vintage">Vintage</label>
+                <input
+                    {...register("vintage")}
+                    className={styles.textField}
+                />
+                {errors.vintage?.message && (
+                    <p className={styles.errorMessage}>
+                        {errors.vintage.message}
+                    </p>
+                )}
+            </div>
+            <div className={styles.formField}>
+                <label htmlFor="flavourProfile">Flavours (comma seperated)</label>
+                <input
+                    {...register("flavourProfile")}
+                    className={styles.textField}
+                />
+                {errors.flavourProfile?.message && (
+                    <p className={styles.errorMessage}>
+                        {errors.flavourProfile.message}
+                    </p>
+                )}
+            </div>
+            <button type="submit">Store Wine {isProcessing ? <SpinnerIcon/> : null}</button>
+        </form>
     );
 }
 

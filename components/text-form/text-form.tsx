@@ -1,51 +1,68 @@
-import {FC} from 'react';
-import {ErrorMessage, Field, Form, Formik, FormikHelpers} from 'formik';
+import {forwardRef, MouseEvent, MutableRefObject} from 'react';
 import * as yup from 'yup';
 import styles from './styles.module.css'
 import SpinnerIcon from '../icons/spinner.icon';
+import {useForm} from "react-hook-form";
+import {yupResolver} from '@hookform/resolvers/yup';
 
 const schema = yup.object({
     text: yup.string()
-        .max(512, 'Must be 512 characters or less')
+        .max(1024, 'Must be 1024 characters or less')
         .required('Required')
-})
+}).required();
 
-interface IPostPromptFormProps<T> {
-    handleSubmit: (values: T, formikHelpers: FormikHelpers<T>) => void | Promise<any>
+export type TastingNotesFormData = yup.InferType<typeof schema>;
+
+interface IPostPromptFormProps {
+    onSubmit: (values: TastingNotesFormData) => void
+    handleSave?: (e: MouseEvent<HTMLButtonElement>) => Promise<void>
+    isSaving: boolean
     isProcessing: boolean
-    buttonText: string,
-    placeholder: string,
+    buttonText: string
+    placeholder: string
 }
 
-const TextForm: FC<IPostPromptFormProps<{ text: string }>> = ({
-                                                                  handleSubmit,
-                                                                  isProcessing,
-                                                                  buttonText,
-                                                                  placeholder = ''
-                                                              }) => {
-    return (
-        <Formik
-            initialValues={{text: ''}}
-            validationSchema={schema}
-            onSubmit={handleSubmit}
-        >
-            <Form>
+const TextForm = forwardRef<HTMLTextAreaElement | null, IPostPromptFormProps>(
+    ({
+         onSubmit,
+         handleSave,
+         isSaving,
+         isProcessing,
+         buttonText,
+         placeholder = ''
+     },
+     forwardedRef
+    ) => {
+        const {
+            register,
+            handleSubmit,
+            formState: {errors}
+        } = useForm<TastingNotesFormData>({
+            resolver: yupResolver(schema)
+        });
+
+        const {ref, ...rest} = register('text');
+
+        return (
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.formField}>
-                    <Field
-                        name="text"
-                        as="textarea"
+                    <textarea
+                        {...rest}
+                        ref={(e) => {
+                            ref(e)
+                            if (forwardedRef) (forwardedRef as MutableRefObject<HTMLTextAreaElement | null>).current = e // you can still assign to ref
+                        }}
                         placeholder={placeholder}
                         className={styles.textField}
                     />
-                    <div className={styles.errorMessage}>
-                        <ErrorMessage name="text"/>
-                    </div>
+                    {errors.text?.message && <p className={styles.errorMessage}>{errors.text.message}</p>}
                 </div>
-                <button type="submit">{buttonText} {isProcessing ? <SpinnerIcon/> : null}</button>
-            </Form>
-        </Formik>
-    );
-
-}
+                <div className={styles.buttonRow}>
+                    <button type="submit">{buttonText} {isProcessing ? <SpinnerIcon/> : null}</button>
+                    {handleSave ? <button onClick={handleSave}>Save {isSaving ? <SpinnerIcon/> : null}</button> : null}
+                </div>
+            </form>
+        );
+    })
 
 export default TextForm;

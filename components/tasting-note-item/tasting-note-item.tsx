@@ -10,17 +10,28 @@ import AutoExpandTextArea from "../form-elements/auto-expand-text-area";
 interface ITastingNoteItemProps {
     tastingNote: string
     wine: IWine | null
-    depth: number,
+    depth: number
+    handlePromote: (text: string) => void
+    handleRemove: () => void
 }
 
-const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, wine, depth}) => {
+const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, wine, depth, handleRemove, handlePromote}) => {
     const [subTastingNotes, setSubTastingNotes] = useState([]);
     const [isProcessing, setIsProcessing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const ref = createRef<HTMLDivElement>()
 
+    const promote = () => {
+        if (!ref.current) return;
+        handlePromote(ref.current.innerText);
+    }
+
+    const handleSubRemove = (index: number) => () => {
+        setSubTastingNotes(prevState => prevState.filter((_, i) => i !== index))
+    }
+
     const handleReimagine = async () => {
-        if(!ref.current?.innerText) return // Todo: display an error if there's no text
+        if (!ref.current?.innerText) return // Todo: display an error if there's no text
         if (depth === 3) {
             // Todo: implement error/message handler
             alert('Max depth reached')
@@ -47,12 +58,11 @@ const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, wine, depth}) 
     const handleSave = async () => {
         setIsSaving(true);
         try {
-            if(!ref.current?.innerText) return // Todo: display an error if there's no text
-            const response = await addTastingNoteRequest({
+            if (!ref.current?.innerText) return // Todo: display an error if there's no text
+            await addTastingNoteRequest({
                 wineSk: wine!.sk,
                 text: ref.current?.innerText
             });
-            setSubTastingNotes(response?.choices.map((choice: { text: string }) => choice.text) || [])
         } catch (e) {
             // Todo: handle error
             console.log(e)
@@ -65,6 +75,9 @@ const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, wine, depth}) 
             <div className={styles.listItem}>
                 <AutoExpandTextArea ref={ref}>{tastingNote}</AutoExpandTextArea>
                 <div className={styles.buttonRow}>
+                    <button onClick={promote}>
+                        Pick
+                    </button>
                     {
                         depth < 3 ? (
                             <button onClick={handleReimagine}>
@@ -77,6 +90,9 @@ const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, wine, depth}) 
                             Save {isSaving ? <SpinnerIcon/> : null}
                         </button>
                     ) : null}
+                    <button onClick={handleRemove}>
+                        Remove
+                    </button>
                 </div>
 
                 {subTastingNotes.length ? (
@@ -86,6 +102,8 @@ const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, wine, depth}) 
                             tastingNote={stn}
                             wine={wine}
                             depth={depth + 1}
+                            handleRemove={handleSubRemove(i)}
+                            handlePromote={handlePromote}
                         />)}
                     </ol>
                 ) : null}

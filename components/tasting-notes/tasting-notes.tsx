@@ -1,18 +1,30 @@
-import {FC, useState} from 'react';
-import TextForm from '../text-form/text-form';
-import {FormikHelpers} from 'formik';
+import {createRef, FC, useRef, useState, MouseEvent} from 'react';
+import TextForm, {TastingNotesFormData} from '../text-form/text-form';
 import tastingNotesTextCompletionRequest from '../../requests/tasting-notes-text-completion.request';
 import TastingNoteItem from '../tasting-note-item/tasting-note-item';
 import styles from './styles.module.css';
 import StoredTastingNotes from '../stored-tasting-notes/stored-tasting-notes';
 import {IChoice, ITastingNotesProps} from "../../interface/misc";
+import addTastingNoteRequest from "../../requests/wine/add-tasting-note.request";
 
 const TastingNotes: FC<ITastingNotesProps> = ({wine}) => {
     const [results, setResults] = useState<string[]>([]);
     const [isProcessing, setIsProcessing] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
     const [currentTab, setCurrentTab] = useState<'generate' | 'reimagine' | 'notes'>('generate');
+    const ref = useRef<HTMLTextAreaElement | null>(null);
 
-    const handleSubmitCompletion = async ({text}: { text: string }, _: FormikHelpers<any>) => {
+    const handleRemove = (index: number) => () => {
+        setResults(prevState => prevState.filter((_, i) => i !== index))
+    }
+
+    const handlePromote = (text: string) => {
+        if (!ref.current) return;
+        ref.current.value = text;
+        setResults([]);
+    }
+
+    const handleSubmitCompletion = async ({text}: TastingNotesFormData) => {
         setIsProcessing(true);
         setResults([]);
         try {
@@ -31,6 +43,22 @@ const TastingNotes: FC<ITastingNotesProps> = ({wine}) => {
         }
         setIsProcessing(false);
     }
+
+    const handleSave = async (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        if (!ref.current?.value || !wine) return // Todo: display an error if there's no text
+        setIsSaving(true);
+        try {
+            await addTastingNoteRequest({
+                wineSk: wine.sk,
+                text: ref.current.value
+            });
+        } catch (e) {
+            // Todo: handle error
+            console.log(e)
+        }
+        setIsSaving(false);
+    };
 
     const handleTabChange = (tab: 'generate' | 'reimagine' | 'notes') => () => setCurrentTab(tab);
 
@@ -52,7 +80,10 @@ const TastingNotes: FC<ITastingNotesProps> = ({wine}) => {
             </div>
             <>
                 {currentTab === 'generate' ? <TextForm
-                    handleSubmit={handleSubmitCompletion}
+                    ref={ref}
+                    onSubmit={handleSubmitCompletion}
+                    handleSave={wine ? handleSave : undefined}
+                    isSaving={isSaving}
                     isProcessing={isProcessing}
                     buttonText={'Generate'}
                     placeholder="Notes of blackberry, currant, and plum. There is a hint of oak on the finish…"
@@ -68,6 +99,8 @@ const TastingNotes: FC<ITastingNotesProps> = ({wine}) => {
                                     tastingNote={tastingNote}
                                     wine={wine}
                                     depth={1}
+                                    handlePromote={handlePromote}
+                                    handleRemove={handleRemove(i)}
                                 />)}
                         </ol>
                     </>
