@@ -65,4 +65,6 @@ const TextForm = forwardRef<HTMLTextAreaElement | null, IPostPromptFormProps>(
         );
     })
 
+TextForm.displayName = 'TextForm'
+
 export default TextForm;
