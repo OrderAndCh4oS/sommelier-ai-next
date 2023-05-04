@@ -75,6 +75,11 @@ const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, wine, depth, h
             <div className={styles.listItem}>
                 <AutoExpandTextArea ref={ref}>{tastingNote}</AutoExpandTextArea>
                 <div className={styles.buttonRow}>
+                    {wine ? (
+                        <button onClick={handleSave}>
+                            Save {isSaving ? <SpinnerIcon/> : null}
+                        </button>
+                    ) : null}
                     <button onClick={promote}>
                         Pick
                     </button>
@@ -85,12 +90,7 @@ const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, wine, depth, h
                             </button>
                         ) : null
                     }
-                    {wine ? (
-                        <button onClick={handleSave}>
-                            Save {isSaving ? <SpinnerIcon/> : null}
-                        </button>
-                    ) : null}
-                    <button onClick={handleRemove}>
+                    <button className={styles.removeButton} onClick={handleRemove}>
                         Remove
                     </button>
                 </div>
