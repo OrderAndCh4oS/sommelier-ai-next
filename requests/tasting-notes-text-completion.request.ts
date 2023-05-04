@@ -2,11 +2,14 @@ import axios from 'axios';
 import IWine from '../interface/wine-list.interface';
 
 
-const tastingNotesTextCompletionRequest = async (prompt: string, wine: IWine | null) => {
-    // Todo: handle error responses
-    const response = await axios.post('/api/tasting-notes-text-completion', {prompt, wine});
-
-    return response.data;
+const tastingNotesTextCompletionRequest = async (notes: string, wine: Partial<IWine> | null) => {
+    console.log('WINE', wine);
+    try {
+        const response = await axios.post('/api/tasting-notes-chat', {notes, wine});
+        return response.data;
+    } catch(e) {
+        console.log('REQUEST_ERROR', e)
+    }
 }
 
 export default tastingNotesTextCompletionRequest;

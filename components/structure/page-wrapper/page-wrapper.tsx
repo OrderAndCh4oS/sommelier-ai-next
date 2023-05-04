@@ -12,7 +12,6 @@ const PageWrapper: FC<IPageWrapperProps> = ({children}) => {
     const {user, error, isLoading} = useUser();
 
     // Todo: show toast notification if login fails.
-    // if (error) return <div>{error.message}</div>;
 
     return (
         <div className={styles.pageWrapper}>

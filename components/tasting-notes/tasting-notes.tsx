@@ -7,9 +7,21 @@ import tastingNotesReimagineRequest from '../../requests/tasting-notes-reimagine
 import styles from './styles.module.css';
 import IWine from '../../interface/wine-list.interface';
 import StoredTastingNotes from '../stored-tasting-notes/stored-tasting-notes';
+import ITastingNote from "../../interface/tasting-note.interface";
 
 interface ITastingNotesProps {
     wine: IWine | null
+}
+
+interface IChoice {
+    message: IMessage
+    index: number
+    finish_reason: string
+}
+
+interface IMessage {
+    content: string
+    role: string
 }
 
 const TastingNotes: FC<ITastingNotesProps> = ({wine}) => {
@@ -17,21 +29,20 @@ const TastingNotes: FC<ITastingNotesProps> = ({wine}) => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [currentTab, setCurrentTab] = useState<'generate' | 'reimagine' | 'notes'>('generate');
 
-    const handleSubmitCompletion = async ({text: prompt}: { text: string }, _: FormikHelpers<any>) => {
+    const handleSubmitCompletion = async ({text}: { text: string }, _: FormikHelpers<any>) => {
         setIsProcessing(true);
         setResults([]);
         try {
-            const response = await tastingNotesTextCompletionRequest(prompt, wine);
-            setResults(response?.choices.map((choice: { text: string }) => {
-                let completion = choice.text.trim();
-                if (!/\p{P}$/u.test(completion)) {
-                    completion += ' …'
+            let wineData = null;
+            if(wine) {
+                wineData = {...wine};
+                for(const key of ['createdAt', 'updatedAt', 'sk', 'tastingNoteSk', 'tastingNote', 'tastingNotes', 'userId']) {
+                    delete wineData[key];
                 }
-                if (/^[\p{L}\p{N}\p{Ps}\p{Pi}\p{Pd}]/u.test(completion)) {
-                    completion = ' ' + completion
-                }
-                return `${prompt}${completion}`;
-            }) || [])
+            }
+            const response = await tastingNotesTextCompletionRequest(text, wineData);
+            console.log('RESPONSE', response);
+            setResults(response?.choices.map((choice: IChoice) => choice.message.content.trim()) || [])
         } catch (e) {
             // Todo: display error
             console.log(e);
