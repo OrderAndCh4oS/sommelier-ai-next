@@ -49,7 +49,8 @@ const StoredTastingNotes: FC<{ wineSk: string }> = ({wineSk}) => {
             <ol>
                 {wine.tastingNotes?.map(tastingNote => (
                     <li key={tastingNote.sk}>
-                        <div className={`${styles.listItem} ${tastingNote.sk === wine.tastingNoteSk ? styles.selected : ''}`}>
+                        <div
+                            className={`${styles.listItem} ${tastingNote.sk === wine.tastingNoteSk ? styles.selected : ''}`}>
                             {tastingNote.sk === wine.tastingNoteSk && <p className={styles.selectedText}>Selected</p>}
                             <p className={styles.tastingNoteText}>{tastingNote.text}</p>
                             <button onClick={handleSelect(tastingNote.sk)}>

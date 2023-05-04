@@ -1,11 +1,8 @@
 import {FC, useState} from 'react';
-import tastingNotesReimagineRequest from '../../requests/tasting-notes-reimagine.request';
 import SpinnerIcon from '../icons/spinner.icon';
 import styles from './styles.module.css';
 import IWine from '../../interface/wine-list.interface';
 import addTastingNoteRequest from '../../requests/wine/add-tasting-note.request';
-import {useUser} from '@auth0/nextjs-auth0';
-import {FormikHelpers} from "formik";
 import tastingNotesTextCompletionRequest from "../../requests/tasting-notes-text-completion.request";
 import {IChoice} from "../../interface/misc";
 

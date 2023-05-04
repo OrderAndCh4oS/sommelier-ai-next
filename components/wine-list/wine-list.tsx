@@ -55,7 +55,9 @@ const WineList: FC = () => {
     return (
         <>
             <Link href="/wine/create">
-                <a className={styles.buttonLink}><button>Add Wine</button></a>
+                <a className={styles.buttonLink}>
+                    <button>Add Wine</button>
+                </a>
             </Link>
             <h2>Wine List</h2>
             {!wineList && <p className={styles.loading}>Loading…</p>}
@@ -73,7 +75,9 @@ const WineList: FC = () => {
                                 query: {sk: wine.sk},
                             }}
                         >
-                            <a className={styles.buttonLink}><button className="button">Tasting Notes</button></a>
+                            <a className={styles.buttonLink}>
+                                <button className="button">Tasting Notes</button>
+                            </a>
                         </Link>
                         <Link
                             href={{
@@ -81,7 +85,9 @@ const WineList: FC = () => {
                                 query: {sk: wine.sk},
                             }}
                         >
-                            <a className={styles.buttonLink}><button className="button">Edit</button></a>
+                            <a className={styles.buttonLink}>
+                                <button className="button">Edit</button>
+                            </a>
                         </Link>
                         <DeleteWineButton tastingNote={wine} handleRemoveWine={handleRemoveWine}/>
                     </div>
