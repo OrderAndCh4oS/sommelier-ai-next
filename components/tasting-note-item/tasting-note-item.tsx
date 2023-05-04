@@ -68,7 +68,7 @@ const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, wine, depth}) 
                     {
                         depth < 3 ? (
                             <button onClick={handleReimagine}>
-                                Reimagine {isProcessing ? <SpinnerIcon/> : null}
+                                More Like This {isProcessing ? <SpinnerIcon/> : null}
                             </button>
                         ) : null
                     }
