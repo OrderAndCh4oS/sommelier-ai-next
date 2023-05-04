@@ -16,7 +16,7 @@ export type TastingNotesFormData = yup.InferType<typeof schema>;
 interface IPostPromptFormProps {
     onSubmit: (values: TastingNotesFormData) => void
     handleSave?: (e: MouseEvent<HTMLButtonElement>) => Promise<void>
-    isSaving: boolean
+    isSaving?: boolean
     isProcessing: boolean
     buttonText: string
     placeholder: string
