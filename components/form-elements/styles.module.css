@@ -1,0 +1,16 @@
+.textField {
+    font-family: 'Ibarra Real Nova', 'Goudy Old Style', Garamond, 'Times New Roman', serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 12px;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    resize: both;
+    min-height: 40px;
+    line-height: 1.3em;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+}
