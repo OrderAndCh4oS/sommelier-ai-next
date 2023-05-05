@@ -1,6 +1,6 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
 import {getAccessToken, withApiAuthRequired} from '@auth0/nextjs-auth0';
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
 
 if (!process.env.API_KEY) throw new Error('Missing API_KEY')
 
@@ -21,7 +21,8 @@ export default withApiAuthRequired(
 
             res.status(200).json(response.data);
         } catch (e) {
-            console.log(e);
+            if (e instanceof AxiosError) console.log('AXIOS_ERROR:', e.code, e.response?.data);
+            else console.log('REQUEST_ERROR', e);
             res.status(500).end();
         }
     }

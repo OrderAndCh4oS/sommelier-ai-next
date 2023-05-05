@@ -3,7 +3,6 @@ import IWine from '../interface/wine-list.interface';
 
 
 const tastingNotesTextCompletionRequest = async (notes: string, wine: Partial<IWine> | null) => {
-    console.log('WINE', wine);
     try {
         const response = await axios.post('/api/tasting-notes-chat', {notes, wine});
         return response.data;

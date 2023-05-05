@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {IUpdateWine} from '../../interface/wine-list.interface';
 import {ISelectTastingNote} from '../../interface/tasting-note.interface';
 
 const selectTastingNoteRequest = async (selectTastingNote: ISelectTastingNote) => {

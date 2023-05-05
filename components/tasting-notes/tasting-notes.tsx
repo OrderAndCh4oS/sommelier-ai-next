@@ -1,4 +1,4 @@
-import {createRef, FC, useRef, useState, MouseEvent} from 'react';
+import {FC, MouseEvent, useRef, useState} from 'react';
 import TextForm, {TastingNotesFormData} from '../text-form/text-form';
 import tastingNotesTextCompletionRequest from '../../requests/tasting-notes-text-completion.request';
 import TastingNoteItem from '../tasting-note-item/tasting-note-item';
@@ -31,8 +31,10 @@ const TastingNotes: FC<ITastingNotesProps> = ({wine}) => {
             let wineData = null;
             if (wine) {
                 wineData = {...wine};
-                for (const key of ['createdAt', 'updatedAt', 'sk', 'tastingNoteSk', 'tastingNote', 'tastingNotes', 'userId']) {
+                for (const key of ['createdAt', 'updatedAt', 'sk', 'tastingNoteId', 'tastingNote', 'tastingNotes', 'userId']) {
+                    console.log(key)
                     delete wineData[key];
+                    console.log('wineDATA', wineData);
                 }
             }
             const response = await tastingNotesTextCompletionRequest(text, wineData);

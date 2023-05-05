@@ -44,7 +44,12 @@ const WineList: FC = () => {
         if (!user?.sub) return
         (async () => {
             const newWineList = await getWineListByUserRequest(user.sub as string);
-            setWineList(newWineList)
+            setWineList(newWineList.map(wine => {
+                if (!wine.tastingNoteId) return wine;
+                const selectedTastingNote = wine.tastingNotes?.find(tn => tn.id === wine.tastingNoteId);
+                if (selectedTastingNote) wine.tastingNote = selectedTastingNote.text;
+                return wine;
+            }))
         })()
     }, [user]);
 
@@ -67,7 +72,14 @@ const WineList: FC = () => {
                     <h3>{wine.name}</h3>
                     <p>{wine.country}, {wine.region}, {wine.vineyard}, {wine.vintage}</p>
                     <p>Score: {wine.score}</p>
-                    {wine.tastingNote && <><h4>Tasting Notes</h4><p>{wine.tastingNote}</p></>}
+                    {wine.tastingNote
+                        ? (
+                            <>
+                                <h4>Tasting Notes</h4>
+                                <p>{wine.tastingNote}</p>
+                            </>
+                        ) : null
+                    }
                     <div className={styles.buttonRow}>
                         <Link
                             href={{

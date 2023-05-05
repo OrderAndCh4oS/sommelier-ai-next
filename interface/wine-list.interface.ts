@@ -2,6 +2,7 @@ import ITastingNote from './tasting-note.interface';
 
 
 export default interface IWine {
+    userId: string,
     sk: string
     name: string
     style: string
@@ -13,7 +14,7 @@ export default interface IWine {
     flavourProfile: string[]
     createdAt: string
     updatedAt: string
-    tastingNoteSk?: string
+    tastingNoteId?: string
     tastingNote?: string
     tastingNotes?: ITastingNote[]
 }

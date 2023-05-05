@@ -42,7 +42,7 @@ const TastingNoteItem: FC<ITastingNoteItemProps> = ({tastingNote, wine, depth, h
             let wineData = null;
             if (wine) {
                 wineData = {...wine};
-                for (const key of ['createdAt', 'updatedAt', 'sk', 'tastingNoteSk', 'tastingNote', 'tastingNotes', 'userId']) {
+                for (const key of ['createdAt', 'updatedAt', 'sk', 'tastingNoteId', 'tastingNote', 'tastingNotes', 'userId']) {
                     delete wineData[key];
                 }
             }

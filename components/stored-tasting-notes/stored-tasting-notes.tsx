@@ -12,12 +12,12 @@ const StoredTastingNotes: FC<{ wineSk: string }> = ({wineSk}) => {
     const [isSelecting, setIsSelecting] = useState(false);
     const [hasSaved, setHasSaved] = useState(false);
 
-    const handleSelect = (tastingNoteSk: string) => async () => {
+    const handleSelect = (tastingNoteId: string) => async () => {
         setIsSelecting(true);
         try {
             await selectTastingNoteRequest({
                 wineSk: wine!.sk,
-                tastingNoteSk
+                tastingNoteId
             });
             const newWine = await getWineRequest(wineSk);
             setWine(newWine)
@@ -48,12 +48,12 @@ const StoredTastingNotes: FC<{ wineSk: string }> = ({wineSk}) => {
             <h4>Stored Notes</h4>
             <ol>
                 {wine.tastingNotes?.map(tastingNote => (
-                    <li key={tastingNote.sk}>
+                    <li key={tastingNote.id}>
                         <div
-                            className={`${styles.listItem} ${tastingNote.sk === wine.tastingNoteSk ? styles.selected : ''}`}>
-                            {tastingNote.sk === wine.tastingNoteSk && <p className={styles.selectedText}>Selected</p>}
+                            className={`${styles.listItem} ${tastingNote.id === wine.tastingNoteId ? styles.selected : ''}`}>
+                            {tastingNote.id === wine.tastingNoteId && <p className={styles.selectedText}>Selected</p>}
                             <p className={styles.tastingNoteText}>{tastingNote.text}</p>
-                            <button onClick={handleSelect(tastingNote.sk)}>
+                            <button onClick={handleSelect(tastingNote.id)}>
                                 Select {isSelecting ? <SpinnerIcon/> : null}
                             </button>
                         </div>
