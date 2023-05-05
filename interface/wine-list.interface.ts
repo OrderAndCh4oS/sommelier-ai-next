@@ -19,5 +19,5 @@ export default interface IWine {
     tastingNotes?: ITastingNote[]
 }
 
-export type ICreateWine = Omit<IWine, 'sk' | 'createdAt' | 'updatedAt'>;
+export type ICreateWine = Omit<IWine, 'userId' | 'sk' | 'createdAt' | 'updatedAt'>;
 export type IUpdateWine = Omit<IWine, 'createdAt' | 'updatedAt'>;

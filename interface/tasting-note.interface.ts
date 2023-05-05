@@ -3,7 +3,10 @@ export default interface ITastingNote {
     text: string,
 }
 
-export type ICreateTastingNote = Omit<ITastingNote, 'sk' | 'createdAt' | 'updatedAt'>;
+export type ICreateTastingNote = {
+    wineSk: string,
+    text: string
+}
 
 export interface ISelectTastingNote {
     wineSk: string,
