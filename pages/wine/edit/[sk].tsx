@@ -8,7 +8,6 @@ import getWineRequest from '../../../requests/wine/get-wine.request';
 import IWine from '../../../interface/wine-list.interface';
 
 const EditWine: NextPage = () => {
-    const {user} = useUser();
     const router = useRouter();
     const {sk} = router.query;
     const [storedWine, setStoredWine] = useState<IWine | null>(null);

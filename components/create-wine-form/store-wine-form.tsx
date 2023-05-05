@@ -1,4 +1,4 @@
-import {FC, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import * as yup from 'yup';
 import styles from './styles.module.css'
 import SpinnerIcon from '../icons/spinner.icon';
@@ -33,7 +33,7 @@ let initialValues = {
 
 type IWineFormValues = Omit<ICreateWine, 'userId' | 'tastingNote' | 'flavourProfile'> & { flavourProfile: string };
 
-const removeNonStoreWineFormValues = (storedWine: IWine) => {
+const getInitialValues = (storedWine: IWine) => {
     const tempStoredWine = {...storedWine};
     const initialValuesKeys = Object.keys(initialValues);
 
@@ -42,7 +42,7 @@ const removeNonStoreWineFormValues = (storedWine: IWine) => {
             delete (tempStoredWine)[key as keyof IWineFormValues];
     }
 
-    initialValues = {
+    return {
         ...tempStoredWine,
         flavourProfile: tempStoredWine.flavourProfile.join(', ')
     }
@@ -51,11 +51,15 @@ const removeNonStoreWineFormValues = (storedWine: IWine) => {
 const StoreWineForm: FC<{ storedWine?: IWine | null }> = ({storedWine}) => {
     const [isProcessing, setIsProcessing] = useState(false);
 
-    const {register, handleSubmit, formState: {errors}} = useForm<FormData>({
-        resolver: yupResolver(schema)
+    const {register, handleSubmit, reset, formState: {errors}} = useForm<FormData>({
+        resolver: yupResolver(schema),
+        defaultValues: initialValues
     });
 
-    if (storedWine) removeNonStoreWineFormValues(storedWine);
+    useEffect(() => {
+        if(!storedWine) return;
+        reset(getInitialValues(storedWine))
+    }, [storedWine])
 
     const onSubmit = async (values: FormData) => {
         setIsProcessing(true);
@@ -70,8 +74,8 @@ const StoreWineForm: FC<{ storedWine?: IWine | null }> = ({storedWine}) => {
                 delete tempStoredWine.createdAt;
                 delete tempStoredWine.updatedAt;
                 await updateWineRequest({
-                    ...(tempStoredWine as IUpdateWine),
                     ...values,
+                    sk: storedWine.sk,
                     flavourProfile: values.flavourProfile.split(', '),
                 });
             }
@@ -88,7 +92,7 @@ const StoreWineForm: FC<{ storedWine?: IWine | null }> = ({storedWine}) => {
             <div className={styles.formField}>
                 <label htmlFor="name">Name</label>
                 <input
-                    {...register("name")}
+                    {...register("name", { value: 'bill' })}
                     className={styles.textField}
                 />
                 {errors.name?.message && (

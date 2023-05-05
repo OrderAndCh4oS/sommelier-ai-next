@@ -1,5 +1,5 @@
 import type {NextPage} from 'next'
-import {useUser, withPageAuthRequired} from '@auth0/nextjs-auth0';
+import {withPageAuthRequired} from '@auth0/nextjs-auth0';
 import TastingNotes from '../../../components/tasting-notes/tasting-notes';
 import PageWrapper from '../../../components/structure/page-wrapper/page-wrapper';
 import {useRouter} from 'next/router';
@@ -14,7 +14,7 @@ const TastingNotesPage: NextPage = () => {
 
     // Todo: React Query would be be useful here
     useEffect(() => {
-        if(!sk) return;
+        if (!sk) return;
         (async () => {
             const wine = await getWineRequest(sk as string);
             setWine(wine);

@@ -20,4 +20,4 @@ export default interface IWine {
 }
 
 export type ICreateWine = Omit<IWine, 'userId' | 'sk' | 'createdAt' | 'updatedAt'>;
-export type IUpdateWine = Omit<IWine, 'createdAt' | 'updatedAt'>;
+export type IUpdateWine = Omit<IWine, 'userId' | 'tastingNotes' | 'tastingNote' | 'tastingNoteId' | 'createdAt' | 'updatedAt'>;

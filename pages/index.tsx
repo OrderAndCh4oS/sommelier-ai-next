@@ -5,10 +5,10 @@ import {useUser} from "@auth0/nextjs-auth0";
 import TastingNotes from "../components/tasting-notes/tasting-notes";
 
 const Home: NextPage = () => {
-    const {user} = useUser();
+    const {isLoading, user} = useUser();
     return (
         <PageWrapper>
-            {!user ? <IntroSpiel/> : <TastingNotes wine={null}/>}
+            {!user || isLoading ? <IntroSpiel/> : <TastingNotes wine={null}/>}
         </PageWrapper>
     )
 }
