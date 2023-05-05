@@ -29,7 +29,6 @@ export default withApiAuthRequired(
         } catch (e) {
             if(e instanceof AxiosError) {
                 console.log('AXIOS_ERROR:', e.code, e.response?.data);
-                res.status(Number(e.code)).end();
             }
             else console.log('REQUEST_ERROR', e);
             res.status(500).end();
